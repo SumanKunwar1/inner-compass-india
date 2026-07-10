@@ -9,8 +9,86 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as SponsorsRouteImport } from './routes/sponsors'
+import { Route as SpiritualTripsRouteImport } from './routes/spiritual-trips'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PeacePrayersRouteImport } from './routes/peace-prayers'
+import { Route as OnlineClassesRouteImport } from './routes/online-classes'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as DonateRouteImport } from './routes/donate'
+import { Route as DharmaCampaignRouteImport } from './routes/dharma-campaign'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SponsorsRoute = SponsorsRouteImport.update({
+  id: '/sponsors',
+  path: '/sponsors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpiritualTripsRoute = SpiritualTripsRouteImport.update({
+  id: '/spiritual-trips',
+  path: '/spiritual-trips',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeacePrayersRoute = PeacePrayersRouteImport.update({
+  id: '/peace-prayers',
+  path: '/peace-prayers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnlineClassesRoute = OnlineClassesRouteImport.update({
+  id: '/online-classes',
+  path: '/online-classes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DharmaCampaignRoute = DharmaCampaignRouteImport.update({
+  id: '/dharma-campaign',
+  path: '/dharma-campaign',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +97,214 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/dharma-campaign': typeof DharmaCampaignRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/online-classes': typeof OnlineClassesRoute
+  '/peace-prayers': typeof PeacePrayersRoute
+  '/projects': typeof ProjectsRoute
+  '/register': typeof RegisterRoute
+  '/services': typeof ServicesRoute
+  '/spiritual-trips': typeof SpiritualTripsRoute
+  '/sponsors': typeof SponsorsRoute
+  '/support': typeof SupportRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/dharma-campaign': typeof DharmaCampaignRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/online-classes': typeof OnlineClassesRoute
+  '/peace-prayers': typeof PeacePrayersRoute
+  '/projects': typeof ProjectsRoute
+  '/register': typeof RegisterRoute
+  '/services': typeof ServicesRoute
+  '/spiritual-trips': typeof SpiritualTripsRoute
+  '/sponsors': typeof SponsorsRoute
+  '/support': typeof SupportRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/dharma-campaign': typeof DharmaCampaignRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/online-classes': typeof OnlineClassesRoute
+  '/peace-prayers': typeof PeacePrayersRoute
+  '/projects': typeof ProjectsRoute
+  '/register': typeof RegisterRoute
+  '/services': typeof ServicesRoute
+  '/spiritual-trips': typeof SpiritualTripsRoute
+  '/sponsors': typeof SponsorsRoute
+  '/support': typeof SupportRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/dharma-campaign'
+    | '/donate'
+    | '/events'
+    | '/online-classes'
+    | '/peace-prayers'
+    | '/projects'
+    | '/register'
+    | '/services'
+    | '/spiritual-trips'
+    | '/sponsors'
+    | '/support'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/dharma-campaign'
+    | '/donate'
+    | '/events'
+    | '/online-classes'
+    | '/peace-prayers'
+    | '/projects'
+    | '/register'
+    | '/services'
+    | '/spiritual-trips'
+    | '/sponsors'
+    | '/support'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/dharma-campaign'
+    | '/donate'
+    | '/events'
+    | '/online-classes'
+    | '/peace-prayers'
+    | '/projects'
+    | '/register'
+    | '/services'
+    | '/spiritual-trips'
+    | '/sponsors'
+    | '/support'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
+  DharmaCampaignRoute: typeof DharmaCampaignRoute
+  DonateRoute: typeof DonateRoute
+  EventsRoute: typeof EventsRoute
+  OnlineClassesRoute: typeof OnlineClassesRoute
+  PeacePrayersRoute: typeof PeacePrayersRoute
+  ProjectsRoute: typeof ProjectsRoute
+  RegisterRoute: typeof RegisterRoute
+  ServicesRoute: typeof ServicesRoute
+  SpiritualTripsRoute: typeof SpiritualTripsRoute
+  SponsorsRoute: typeof SponsorsRoute
+  SupportRoute: typeof SupportRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sponsors': {
+      id: '/sponsors'
+      path: '/sponsors'
+      fullPath: '/sponsors'
+      preLoaderRoute: typeof SponsorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/spiritual-trips': {
+      id: '/spiritual-trips'
+      path: '/spiritual-trips'
+      fullPath: '/spiritual-trips'
+      preLoaderRoute: typeof SpiritualTripsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/peace-prayers': {
+      id: '/peace-prayers'
+      path: '/peace-prayers'
+      fullPath: '/peace-prayers'
+      preLoaderRoute: typeof PeacePrayersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/online-classes': {
+      id: '/online-classes'
+      path: '/online-classes'
+      fullPath: '/online-classes'
+      preLoaderRoute: typeof OnlineClassesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dharma-campaign': {
+      id: '/dharma-campaign'
+      path: '/dharma-campaign'
+      fullPath: '/dharma-campaign'
+      preLoaderRoute: typeof DharmaCampaignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +317,20 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  DharmaCampaignRoute: DharmaCampaignRoute,
+  DonateRoute: DonateRoute,
+  EventsRoute: EventsRoute,
+  OnlineClassesRoute: OnlineClassesRoute,
+  PeacePrayersRoute: PeacePrayersRoute,
+  ProjectsRoute: ProjectsRoute,
+  RegisterRoute: RegisterRoute,
+  ServicesRoute: ServicesRoute,
+  SpiritualTripsRoute: SpiritualTripsRoute,
+  SponsorsRoute: SponsorsRoute,
+  SupportRoute: SupportRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
