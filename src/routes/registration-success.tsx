@@ -122,8 +122,8 @@ function RegistrationSuccess() {
             <button onClick={downloadReceipt} disabled={!data} className="btn-primary disabled:opacity-60">
               <Download className="size-4" /> Download Receipt
             </button>
-            <Link to="/events" className="btn-secondary"><Calendar className="size-4" /> View Events</Link>
-            <Link to="/" className="btn-secondary"><Home className="size-4" /> Back to Home</Link>
+            <Link to="/events" className="inline-flex items-center gap-2 px-5 py-3 rounded border border-maroon text-maroon hover:bg-maroon hover:text-cream transition font-medium"><Calendar className="size-4" /> View Events</Link>
+            <Link to="/" className="inline-flex items-center gap-2 px-5 py-3 rounded border border-maroon text-maroon hover:bg-maroon hover:text-cream transition font-medium"><Home className="size-4" /> Back to Home</Link>
           </div>
         </div>
       </section>
