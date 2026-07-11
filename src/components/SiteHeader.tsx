@@ -1,24 +1,50 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Phone, Mail, Heart } from "lucide-react";
+import { Menu, X, Phone, Mail, Heart, ChevronDown } from "lucide-react";
 import logo from "@/assets/logo-mark.png";
 
-const nav = [
+type NavLeaf = { to: string; label: string; desc?: string };
+type NavItem = NavLeaf | { label: string; children: NavLeaf[] };
+
+const nav: NavItem[] = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About Us" },
-  { to: "/events", label: "Events" },
-  { to: "/peace-prayers", label: "World Peace Prayers" },
-  { to: "/online-classes", label: "Online Classes" },
-  { to: "/services", label: "Services" },
-  { to: "/projects", label: "Projects" },
-  { to: "/dharma-campaign", label: "Dharma Ideal Campaign" },
-  { to: "/sponsors", label: "Event Sponsors" },
-  { to: "/spiritual-trips", label: "Spiritual Trips" },
-  { to: "/support", label: "Support" },
-] as const;
+  {
+    label: "Teachings",
+    children: [
+      { to: "/events", label: "Events & Retreats", desc: "Weekly retreats and Ngyungne" },
+      { to: "/online-classes", label: "Online Classes", desc: "Dharma education courses" },
+      { to: "/peace-prayers", label: "World Peace Prayers", desc: "Global prayer ceremonies" },
+    ],
+  },
+  {
+    label: "Get Involved",
+    children: [
+      { to: "/services", label: "Services", desc: "Spiritual services we offer" },
+      { to: "/projects", label: "Projects", desc: "Construction & community" },
+      { to: "/dharma-campaign", label: "Dharma Ideal Campaign", desc: "Volunteer & sponsor" },
+      { to: "/register", label: "Register", desc: "Sign up for retreats" },
+    ],
+  },
+  {
+    label: "Sponsorship",
+    children: [
+      { to: "/sponsors", label: "Event Sponsors", desc: "Sponsorship tiers" },
+      { to: "/spiritual-trips", label: "Spiritual Trips", desc: "Pilgrimage journeys" },
+      { to: "/support", label: "Support Us", desc: "Ways to contribute" },
+    ],
+  },
+  { to: "/contact", label: "Contact" },
+];
+
+function isGroup(item: NavItem): item is { label: string; children: NavLeaf[] } {
+  return (item as any).children !== undefined;
+}
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
       {/* Top strip */}
@@ -29,11 +55,9 @@ export function SiteHeader() {
             <span className="inline-flex items-center gap-1.5"><Mail className="size-3" /> info@btmcfoundation.in</span>
           </div>
           <div className="flex items-center gap-4 ml-auto font-medium tracking-wide">
-            <Link to="/support" className="hover:text-gold transition-colors">Become a Sponsor</Link>
-            <span className="opacity-30">|</span>
-            <Link to="/register" className="hover:text-gold transition-colors">Sign Up</Link>
+            <Link to="/support" className="hover:text-gold transition-colors hidden sm:inline">Become a Sponsor</Link>
             <span className="opacity-30 hidden sm:inline">|</span>
-            <Link to="/register" className="hover:text-gold transition-colors hidden sm:inline">Sign In</Link>
+            <Link to="/register" className="hover:text-gold transition-colors">Sign Up</Link>
             <span className="opacity-30 hidden sm:inline">|</span>
             <Link to="/contact" className="hover:text-gold transition-colors hidden sm:inline">Contact</Link>
             <Link to="/donate" className="inline-flex items-center gap-1 bg-gold text-maroon-deep px-3 py-1 rounded font-bold hover:brightness-95 transition">
@@ -53,21 +77,59 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        <nav className="hidden xl:flex items-center gap-1 text-[13px] font-medium">
-          {nav.map((n) => (
-            <Link
-              key={n.to}
-              to={n.to}
-              className="px-2.5 py-2 rounded text-foreground/80 hover:text-maroon hover:bg-secondary transition-colors"
-              activeProps={{ className: "text-maroon" }}
-            >
-              {n.label}
-            </Link>
-          ))}
+        <nav
+          className="hidden lg:flex items-center gap-1 text-sm font-medium"
+          onMouseLeave={() => setOpenGroup(null)}
+        >
+          {nav.map((item) =>
+            isGroup(item) ? (
+              <div
+                key={item.label}
+                className="relative"
+                onMouseEnter={() => setOpenGroup(item.label)}
+              >
+                <button
+                  className="inline-flex items-center gap-1 px-3 py-2 rounded text-foreground/80 hover:text-maroon hover:bg-secondary transition-colors"
+                  onClick={() => setOpenGroup(openGroup === item.label ? null : item.label)}
+                >
+                  {item.label}
+                  <ChevronDown className={`size-3.5 transition-transform ${openGroup === item.label ? "rotate-180" : ""}`} />
+                </button>
+                {openGroup === item.label && (
+                  <div className="absolute left-0 top-full pt-2 w-72">
+                    <div className="bg-background border border-border rounded-lg shadow-lg overflow-hidden">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.to}
+                          to={child.to}
+                          onClick={() => setOpenGroup(null)}
+                          className="block px-4 py-3 hover:bg-secondary border-b border-border/50 last:border-0"
+                        >
+                          <div className="font-medium text-maroon text-sm">{child.label}</div>
+                          {child.desc && (
+                            <div className="text-xs text-muted-foreground mt-0.5">{child.desc}</div>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="px-3 py-2 rounded text-foreground/80 hover:text-maroon hover:bg-secondary transition-colors"
+                activeProps={{ className: "text-maroon" }}
+              >
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
         <button
-          className="xl:hidden p-2 text-maroon"
+          className="lg:hidden p-2 text-maroon"
           onClick={() => setOpen(!open)}
           aria-label="Menu"
         >
@@ -76,18 +138,36 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="xl:hidden border-t border-border bg-background">
+        <div className="lg:hidden border-t border-border bg-background">
           <div className="container-x py-3 grid gap-1">
-            {nav.map((n) => (
-              <Link
-                key={n.to}
-                to={n.to}
-                onClick={() => setOpen(false)}
-                className="py-2 px-3 rounded hover:bg-secondary text-sm font-medium"
-              >
-                {n.label}
-              </Link>
-            ))}
+            {nav.map((item) =>
+              isGroup(item) ? (
+                <div key={item.label} className="py-1">
+                  <div className="px-3 pt-2 pb-1 text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    {item.label}
+                  </div>
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.to}
+                      to={child.to}
+                      onClick={() => setOpen(false)}
+                      className="block py-2 px-3 rounded hover:bg-secondary text-sm"
+                    >
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className="py-2 px-3 rounded hover:bg-secondary text-sm font-medium"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </div>
         </div>
       )}
