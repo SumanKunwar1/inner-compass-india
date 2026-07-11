@@ -13,6 +13,7 @@ import { Route as SupportRouteImport } from './routes/support'
 import { Route as SponsorsRouteImport } from './routes/sponsors'
 import { Route as SpiritualTripsRouteImport } from './routes/spiritual-trips'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as RegistrationSuccessRouteImport } from './routes/registration-success'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PeacePrayersRouteImport } from './routes/peace-prayers'
@@ -42,6 +43,11 @@ const SpiritualTripsRoute = SpiritualTripsRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistrationSuccessRoute = RegistrationSuccessRouteImport.update({
+  id: '/registration-success',
+  path: '/registration-success',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
   '/register': typeof RegisterRoute
+  '/registration-success': typeof RegistrationSuccessRoute
   '/services': typeof ServicesRoute
   '/spiritual-trips': typeof SpiritualTripsRoute
   '/sponsors': typeof SponsorsRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
   '/register': typeof RegisterRoute
+  '/registration-success': typeof RegistrationSuccessRoute
   '/services': typeof ServicesRoute
   '/spiritual-trips': typeof SpiritualTripsRoute
   '/sponsors': typeof SponsorsRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
   '/register': typeof RegisterRoute
+  '/registration-success': typeof RegistrationSuccessRoute
   '/services': typeof ServicesRoute
   '/spiritual-trips': typeof SpiritualTripsRoute
   '/sponsors': typeof SponsorsRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/peace-prayers'
     | '/projects'
     | '/register'
+    | '/registration-success'
     | '/services'
     | '/spiritual-trips'
     | '/sponsors'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/peace-prayers'
     | '/projects'
     | '/register'
+    | '/registration-success'
     | '/services'
     | '/spiritual-trips'
     | '/sponsors'
@@ -189,6 +200,7 @@ export interface FileRouteTypes {
     | '/peace-prayers'
     | '/projects'
     | '/register'
+    | '/registration-success'
     | '/services'
     | '/spiritual-trips'
     | '/sponsors'
@@ -206,6 +218,7 @@ export interface RootRouteChildren {
   PeacePrayersRoute: typeof PeacePrayersRoute
   ProjectsRoute: typeof ProjectsRoute
   RegisterRoute: typeof RegisterRoute
+  RegistrationSuccessRoute: typeof RegistrationSuccessRoute
   ServicesRoute: typeof ServicesRoute
   SpiritualTripsRoute: typeof SpiritualTripsRoute
   SponsorsRoute: typeof SponsorsRoute
@@ -240,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registration-success': {
+      id: '/registration-success'
+      path: '/registration-success'
+      fullPath: '/registration-success'
+      preLoaderRoute: typeof RegistrationSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -326,6 +346,7 @@ const rootRouteChildren: RootRouteChildren = {
   PeacePrayersRoute: PeacePrayersRoute,
   ProjectsRoute: ProjectsRoute,
   RegisterRoute: RegisterRoute,
+  RegistrationSuccessRoute: RegistrationSuccessRoute,
   ServicesRoute: ServicesRoute,
   SpiritualTripsRoute: SpiritualTripsRoute,
   SponsorsRoute: SponsorsRoute,
