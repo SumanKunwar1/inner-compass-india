@@ -37,6 +37,8 @@ export function SiteFooter() {
           <ul className="space-y-2 text-sm opacity-90">
             {[
               ["About Us", "/about"],
+              ["Charity Events", "/charity-events"],
+              ["Healing Items", "/healing-items"],
               ["Events", "/events"],
               ["Online Classes", "/online-classes"],
               ["Spiritual Trips", "/spiritual-trips"],

@@ -1,6 +1,59 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout, PageHero } from "@/components/Layout";
-import { Sparkles, Heart, Globe2, BookOpen } from "lucide-react";
+import { Sparkles, Heart, Globe2, BookOpen, Facebook, Instagram, Linkedin, Youtube, Twitter, Tv, GraduationCap, Users, MapPin } from "lucide-react";
+
+const team = [
+  {
+    name: "Ven. Dr. Khen Rinpoche Sonam Gyurme",
+    role: "Main Abbot & Chairman",
+    initials: "SG",
+    gradient: "linear-gradient(135deg, var(--maroon), var(--maroon-deep))",
+    socials: { facebook: "#", youtube: "#", instagram: "#" },
+  },
+  {
+    name: "Tenzin Norbu",
+    role: "Executive Director",
+    initials: "TN",
+    gradient: "linear-gradient(135deg, var(--gold-deep), var(--saffron))",
+    socials: { facebook: "#", linkedin: "#", twitter: "#" },
+  },
+  {
+    name: "Pema Lhamo",
+    role: "Head of Programs",
+    initials: "PL",
+    gradient: "linear-gradient(135deg, oklch(0.45 0.12 220), oklch(0.68 0.12 200))",
+    socials: { instagram: "#", linkedin: "#" },
+  },
+  {
+    name: "Karma Dorjee",
+    role: "Charity & Outreach Lead",
+    initials: "KD",
+    gradient: "linear-gradient(135deg, oklch(0.42 0.08 140), oklch(0.6 0.12 130))",
+    socials: { facebook: "#", youtube: "#" },
+  },
+  {
+    name: "Sonam Choden",
+    role: "Meditation Coordinator",
+    initials: "SC",
+    gradient: "linear-gradient(135deg, oklch(0.55 0.16 320), oklch(0.72 0.15 350))",
+    socials: { instagram: "#", twitter: "#" },
+  },
+  {
+    name: "Rinchen Wangmo",
+    role: "Community & Volunteers",
+    initials: "RW",
+    gradient: "linear-gradient(135deg, oklch(0.5 0.13 45), oklch(0.72 0.16 65))",
+    socials: { facebook: "#", linkedin: "#", instagram: "#" },
+  },
+] as const;
+
+const socialIcons = {
+  facebook: Facebook,
+  instagram: Instagram,
+  linkedin: Linkedin,
+  youtube: Youtube,
+  twitter: Twitter,
+} as const;
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -43,6 +96,119 @@ function About() {
                 <v.i className="size-8 text-gold-deep" />
                 <h3 className="font-display text-2xl text-maroon mt-4">{v.t}</h3>
                 <p className="text-foreground/70 mt-2">{v.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Spiritual Head — biography */}
+      <section className="section-y bg-secondary/40 border-y border-border">
+        <div className="container-x">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="eyebrow">Our Spiritual Head</span>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mt-3 text-maroon">Venerable Dr. Khen Rinpoche Sonam Gyurme</h2>
+            <p className="mt-3 text-gold-deep font-display text-lg">Main Abbot & Chairman — BTMC Foundation India & Dharma Television Nepal</p>
+          </div>
+
+          <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start max-w-5xl mx-auto">
+            <div className="lg:sticky lg:top-24">
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden grid place-items-center" style={{ background: "linear-gradient(135deg, var(--maroon), var(--maroon-deep))" }}>
+                <div className="text-center text-cream px-6">
+                  <div className="size-24 mx-auto rounded-full bg-cream/15 border-2 border-cream/40 grid place-items-center font-display text-4xl backdrop-blur">
+                    SG
+                  </div>
+                  <div className="font-display text-xl mt-5">Ven. Dr. Khen Rinpoche</div>
+                  <div className="text-sm opacity-80">Sonam Gyurme Tamang</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="prose-none space-y-4 text-foreground/80 leading-relaxed">
+                <p className="text-lg font-display text-foreground/85">
+                  Born into the Tamang Buddhist community of Nepal, Venerable Khen Rinpoche Sonam Gyurme
+                  took his novice ordination (Shramanera Shila) at Lokeswara Dhyanagar Monastery in Mhepee,
+                  Kathmandu, at the age of nine, under the late H.E. Dinchhen Rinpoche.
+                </p>
+                <p>
+                  Under his root teacher — popularly known as the "Video Lama" — he received a thorough
+                  monastic education and was trained in the ordinary and extraordinary practices of both
+                  Mahayana and Vajrayana Buddhism. For decades he has devoted his life to benefiting sentient
+                  beings through teaching, practice, training and the skilful use of modern tools and
+                  technology to spread the Buddha Dharma.
+                </p>
+                <p>
+                  He is the founder and president of <strong className="text-maroon">RDCCK — Rigzin Dechhen
+                  Chhoeling Chuglag Khang</strong>, a practice-based monastic school in Barahithan, Nuwakot.
+                  RDCCK offers free education, training and accommodation in Buddhist philosophy, Buddhist arts,
+                  traditional Lama dance, ritual and worship, yoga, retreat, meditation and traditional healing.
+                </p>
+                <p>
+                  A dedicated educator, he has trained more than 350 Dharma teachers across the districts of
+                  Nepal, and served as a lecturer at Lumbini College, affiliated with the Lumbini Buddhist
+                  University of the Government of Nepal. He is also the founder of the Mahabodhi Documentary &
+                  Film Production Foundation, and is closely associated with <strong className="text-maroon">Dharma
+                  Television</strong> — a Full-HD satellite channel that broadcasts Dharma talks, meditation
+                  courses, chanting and healing programs in multiple languages worldwide.
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4 mt-8">
+                {[
+                  { i: MapPin, t: "President, RDCCK", d: "Barahithan, Nuwakot, Nepal" },
+                  { i: Tv, t: "Dharma Television Nepal", d: "Full-HD satellite Dharma channel" },
+                  { i: GraduationCap, t: "350+ Teachers Trained", d: "Across the districts of Nepal" },
+                  { i: Users, t: "BTMC Foundation India", d: "Main Abbot & Chairman" },
+                ].map((f) => (
+                  <div key={f.t} className="flex gap-3 rounded-xl border border-border bg-card p-4">
+                    <div className="size-10 shrink-0 grid place-items-center rounded-lg bg-secondary text-gold-deep"><f.i className="size-5" /></div>
+                    <div>
+                      <div className="font-semibold text-maroon text-sm">{f.t}</div>
+                      <div className="text-xs text-muted-foreground">{f.d}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-y">
+        <div className="container-x">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="eyebrow">Our Team</span>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mt-3 text-maroon">The people behind our mission</h2>
+            <p className="mt-4 text-foreground/70">A dedicated community of teachers, coordinators and volunteers serving the Dharma with compassion.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {team.map((m) => (
+              <div key={m.name} className="group bg-card border border-border rounded-2xl overflow-hidden text-center hover:border-gold hover:shadow-[var(--shadow-warm)] transition">
+                <div className="relative aspect-[4/3] grid place-items-center" style={{ background: m.gradient }}>
+                  <div className="size-24 rounded-full bg-cream/15 border-2 border-cream/40 grid place-items-center font-display text-3xl text-cream backdrop-blur">
+                    {m.initials}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="font-display text-xl text-maroon">{m.name}</h3>
+                  <div className="text-xs uppercase tracking-widest text-gold-deep mt-1">{m.role}</div>
+                  <div className="mt-4 flex items-center justify-center gap-2">
+                    {Object.entries(m.socials).map(([key, href]) => {
+                      const Icon = socialIcons[key as keyof typeof socialIcons];
+                      return (
+                        <a
+                          key={key}
+                          href={href}
+                          aria-label={`${m.name} on ${key}`}
+                          className="size-9 grid place-items-center rounded-full border border-border text-maroon hover:bg-maroon hover:text-cream hover:border-maroon transition"
+                        >
+                          <Icon className="size-4" />
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

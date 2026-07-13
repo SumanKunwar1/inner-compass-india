@@ -18,12 +18,15 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PeacePrayersRouteImport } from './routes/peace-prayers'
 import { Route as OnlineClassesRouteImport } from './routes/online-classes'
+import { Route as HealingItemsRouteImport } from './routes/healing-items'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DharmaCampaignRouteImport } from './routes/dharma-campaign'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CharityEventsIndexRouteImport } from './routes/charity-events.index'
+import { Route as CharityEventsSlugRouteImport } from './routes/charity-events.$slug'
 
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
@@ -70,6 +73,11 @@ const OnlineClassesRoute = OnlineClassesRouteImport.update({
   path: '/online-classes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HealingItemsRoute = HealingItemsRouteImport.update({
+  id: '/healing-items',
+  path: '/healing-items',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
@@ -100,6 +108,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CharityEventsIndexRoute = CharityEventsIndexRouteImport.update({
+  id: '/charity-events/',
+  path: '/charity-events/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CharityEventsSlugRoute = CharityEventsSlugRouteImport.update({
+  id: '/charity-events/$slug',
+  path: '/charity-events/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -108,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
+  '/healing-items': typeof HealingItemsRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -117,6 +136,8 @@ export interface FileRoutesByFullPath {
   '/spiritual-trips': typeof SpiritualTripsRoute
   '/sponsors': typeof SponsorsRoute
   '/support': typeof SupportRoute
+  '/charity-events/$slug': typeof CharityEventsSlugRoute
+  '/charity-events/': typeof CharityEventsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,6 +146,7 @@ export interface FileRoutesByTo {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
+  '/healing-items': typeof HealingItemsRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -134,6 +156,8 @@ export interface FileRoutesByTo {
   '/spiritual-trips': typeof SpiritualTripsRoute
   '/sponsors': typeof SponsorsRoute
   '/support': typeof SupportRoute
+  '/charity-events/$slug': typeof CharityEventsSlugRoute
+  '/charity-events': typeof CharityEventsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,6 +167,7 @@ export interface FileRoutesById {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
+  '/healing-items': typeof HealingItemsRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -152,6 +177,8 @@ export interface FileRoutesById {
   '/spiritual-trips': typeof SpiritualTripsRoute
   '/sponsors': typeof SponsorsRoute
   '/support': typeof SupportRoute
+  '/charity-events/$slug': typeof CharityEventsSlugRoute
+  '/charity-events/': typeof CharityEventsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -162,6 +189,7 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
+    | '/healing-items'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -171,6 +199,8 @@ export interface FileRouteTypes {
     | '/spiritual-trips'
     | '/sponsors'
     | '/support'
+    | '/charity-events/$slug'
+    | '/charity-events/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -179,6 +209,7 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
+    | '/healing-items'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -188,6 +219,8 @@ export interface FileRouteTypes {
     | '/spiritual-trips'
     | '/sponsors'
     | '/support'
+    | '/charity-events/$slug'
+    | '/charity-events'
   id:
     | '__root__'
     | '/'
@@ -196,6 +229,7 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
+    | '/healing-items'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -205,6 +239,8 @@ export interface FileRouteTypes {
     | '/spiritual-trips'
     | '/sponsors'
     | '/support'
+    | '/charity-events/$slug'
+    | '/charity-events/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -214,6 +250,7 @@ export interface RootRouteChildren {
   DharmaCampaignRoute: typeof DharmaCampaignRoute
   DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
+  HealingItemsRoute: typeof HealingItemsRoute
   OnlineClassesRoute: typeof OnlineClassesRoute
   PeacePrayersRoute: typeof PeacePrayersRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -223,6 +260,8 @@ export interface RootRouteChildren {
   SpiritualTripsRoute: typeof SpiritualTripsRoute
   SponsorsRoute: typeof SponsorsRoute
   SupportRoute: typeof SupportRoute
+  CharityEventsSlugRoute: typeof CharityEventsSlugRoute
+  CharityEventsIndexRoute: typeof CharityEventsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -290,6 +329,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnlineClassesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/healing-items': {
+      id: '/healing-items'
+      path: '/healing-items'
+      fullPath: '/healing-items'
+      preLoaderRoute: typeof HealingItemsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -332,6 +378,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/charity-events/': {
+      id: '/charity-events/'
+      path: '/charity-events'
+      fullPath: '/charity-events/'
+      preLoaderRoute: typeof CharityEventsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/charity-events/$slug': {
+      id: '/charity-events/$slug'
+      path: '/charity-events/$slug'
+      fullPath: '/charity-events/$slug'
+      preLoaderRoute: typeof CharityEventsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -342,6 +402,7 @@ const rootRouteChildren: RootRouteChildren = {
   DharmaCampaignRoute: DharmaCampaignRoute,
   DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
+  HealingItemsRoute: HealingItemsRoute,
   OnlineClassesRoute: OnlineClassesRoute,
   PeacePrayersRoute: PeacePrayersRoute,
   ProjectsRoute: ProjectsRoute,
@@ -351,7 +412,19 @@ const rootRouteChildren: RootRouteChildren = {
   SpiritualTripsRoute: SpiritualTripsRoute,
   SponsorsRoute: SponsorsRoute,
   SupportRoute: SupportRoute,
+  CharityEventsSlugRoute: CharityEventsSlugRoute,
+  CharityEventsIndexRoute: CharityEventsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

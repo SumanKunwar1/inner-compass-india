@@ -1,25 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout, PageHero } from "@/components/Layout";
-import { Heart, CreditCard, Smartphone, QrCode, Landmark } from "lucide-react";
+import { Heart, ShieldCheck, HandHeart, Sparkles, BookOpen } from "lucide-react";
+import { PaymentForm } from "@/components/PaymentForm";
 
 export const Route = createFileRoute("/donate")({
   head: () => ({
     meta: [
       { title: "Donate — BTMC Foundation India" },
-      { name: "description", content: "Support meditation education and humanitarian service. Secure donations via Paytm, GPay, UPI, card and net banking." },
+      { name: "description", content: "Support meditation education and humanitarian service. Make a secure donation via UPI or bank transfer and upload your payment screenshot." },
     ],
   }),
   component: Donate,
 });
 
-const amounts = [500, 1100, 2100, 5100, 11000, 21000];
-const methods = [
-  { i: Smartphone, t: "Paytm" },
-  { i: Smartphone, t: "Google Pay" },
-  { i: QrCode, t: "UPI / QR Code" },
-  { i: CreditCard, t: "Credit / Debit Card" },
-  { i: Landmark, t: "Net Banking" },
-  { i: CreditCard, t: "International Cards" },
+const impact = [
+  { i: Sparkles, t: "Free Meditation Retreats", d: "Fund weekly 2-day retreats in Kathmandu." },
+  { i: HandHeart, t: "Humanitarian Charity", d: "Food, healthcare and education outreach." },
+  { i: BookOpen, t: "Dharma Preservation", d: "Teachings, translation and online classes." },
 ];
 
 function Donate() {
@@ -27,59 +24,58 @@ function Donate() {
     <Layout>
       <PageHero eyebrow="Donate Now" title="Your gift, their awakening" subtitle="Every contribution supports free meditation retreats, charity, world peace prayers and Dharma education." />
       <section className="section-y">
-        <div className="container-x grid lg:grid-cols-[3fr_2fr] gap-10">
-          <div className="p-8 bg-card border border-border rounded-lg">
-            <h2 className="font-display text-3xl text-maroon">Choose your contribution</h2>
-            <p className="text-muted-foreground mt-2">All donations directly support our programs.</p>
-
-            <div className="mt-8">
-              <label className="text-sm font-semibold text-foreground/80">Donation Type</label>
-              <div className="grid grid-cols-3 gap-2 mt-2">
-                {["One-time", "Monthly", "Annual"].map((t, i) => (
-                  <button key={t} className={`py-3 rounded border font-medium text-sm ${i === 0 ? "bg-maroon text-cream border-maroon" : "border-border hover:border-gold"}`}>{t}</button>
-                ))}
-              </div>
-            </div>
-
+        <div className="container-x grid lg:grid-cols-[3fr_2fr] gap-10 items-start">
+          <div className="p-6 md:p-8 bg-card border border-border rounded-2xl">
+            <h2 className="font-display text-3xl text-maroon">Make your contribution</h2>
+            <p className="text-muted-foreground mt-2">
+              Choose an amount, transfer it to our account and upload the screenshot — our team will
+              verify your gift and send your 80G receipt by email.
+            </p>
             <div className="mt-6">
-              <label className="text-sm font-semibold text-foreground/80">Amount (₹)</label>
-              <div className="grid grid-cols-3 gap-2 mt-2">
-                {amounts.map((a) => (
-                  <button key={a} className="py-3 rounded border border-border hover:border-gold hover:bg-gold/10 font-semibold text-maroon">₹{a.toLocaleString("en-IN")}</button>
+              <PaymentForm
+                context="Donation"
+                presetAmounts={[500, 1100, 2100, 5100, 11000, 21000]}
+              />
+            </div>
+          </div>
+
+          <aside className="space-y-6 lg:sticky lg:top-24">
+            <div className="rounded-2xl border border-border bg-card p-6">
+              <h3 className="font-display text-2xl text-maroon">Where your gift goes</h3>
+              <ul className="mt-5 space-y-4">
+                {impact.map((m) => (
+                  <li key={m.t} className="flex gap-3">
+                    <div className="size-10 shrink-0 grid place-items-center rounded-lg bg-secondary text-gold-deep">
+                      <m.i className="size-5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-maroon">{m.t}</div>
+                      <div className="text-sm text-muted-foreground">{m.d}</div>
+                    </div>
+                  </li>
                 ))}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl p-6 bg-gold/10 border border-gold">
+              <div className="flex items-center gap-2 text-maroon">
+                <ShieldCheck className="size-5 text-gold-deep" />
+                <div className="font-display text-lg">80G Tax Benefit</div>
               </div>
-              <input type="number" placeholder="Enter custom amount" className="mt-3 w-full px-4 py-3 border border-input rounded bg-background focus:outline-none focus:ring-2 focus:ring-gold" />
+              <p className="text-sm text-foreground/75 mt-2">
+                Donations to BTMC Foundation India are eligible for tax deduction under Section 80G of the
+                Income Tax Act. Add your PAN in the form to receive an 80G receipt.
+              </p>
             </div>
 
-            <div className="mt-6 grid sm:grid-cols-2 gap-4">
-              <input placeholder="Full Name" className="px-4 py-3 border border-input rounded bg-background focus:outline-none focus:ring-2 focus:ring-gold" />
-              <input placeholder="Email Address" className="px-4 py-3 border border-input rounded bg-background focus:outline-none focus:ring-2 focus:ring-gold" />
-              <input placeholder="Mobile Number" className="px-4 py-3 border border-input rounded bg-background focus:outline-none focus:ring-2 focus:ring-gold" />
-              <input placeholder="PAN (for 80G receipt)" className="px-4 py-3 border border-input rounded bg-background focus:outline-none focus:ring-2 focus:ring-gold" />
+            <div className="rounded-2xl p-6 text-cream" style={{ background: "var(--maroon)" }}>
+              <Heart className="size-6 text-gold" />
+              <p className="text-sm text-cream/90 mt-3 leading-relaxed">
+                "May all beings be happy." Thank you for your generosity — every gift, large or small,
+                helps spread wisdom and compassion.
+              </p>
             </div>
-
-            <button type="button" className="btn-primary w-full mt-8 justify-center text-base py-4">
-              <Heart className="size-4 fill-current" /> Donate Securely
-            </button>
-          </div>
-
-          <div>
-            <h3 className="font-display text-2xl text-maroon">Secure Payment Methods</h3>
-            <p className="text-sm text-muted-foreground mt-1">All transactions are encrypted and secure.</p>
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              {methods.map((m) => (
-                <div key={m.t} className="p-4 bg-card border border-border rounded flex items-center gap-3">
-                  <m.i className="size-5 text-gold-deep" />
-                  <span className="text-sm font-medium">{m.t}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 p-6 rounded-lg bg-gold/10 border border-gold">
-              <div className="font-display text-lg text-maroon">80G Tax Benefit</div>
-              <p className="text-sm text-foreground/75 mt-2">Donations to BTMC Foundation India are eligible for tax deduction under Section 80G of the Income Tax Act.</p>
-            </div>
-          </div>
+          </aside>
         </div>
       </section>
     </Layout>

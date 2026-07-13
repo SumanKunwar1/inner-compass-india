@@ -3,18 +3,31 @@ import { useState } from "react";
 import { Menu, X, Phone, Mail, Heart, ChevronDown } from "lucide-react";
 import logo from "@/assets/logo-mark.png";
 
-type NavLeaf = { to: string; label: string; desc?: string };
+type NavLeaf = { to: string; label: string; desc?: string; hash?: string };
 type NavItem = NavLeaf | { label: string; children: NavLeaf[] };
 
 const nav: NavItem[] = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About Us" },
+  { to: "/charity-events", label: "Charity Events" },
   {
     label: "Teachings",
     children: [
       { to: "/events", label: "Events & Retreats", desc: "Weekly retreats and Ngyungne" },
       { to: "/online-classes", label: "Online Classes", desc: "Dharma education courses" },
       { to: "/peace-prayers", label: "World Peace Prayers", desc: "Global prayer ceremonies" },
+    ],
+  },
+  {
+    label: "Healing Items",
+    children: [
+      { to: "/healing-items", label: "Amulets", desc: "Protective Srungwa amulets", hash: "amulets" },
+      { to: "/healing-items", label: "Treasure Vase", desc: "Wealth & abundance vases", hash: "treasure-vase" },
+      { to: "/healing-items", label: "Naga Vase", desc: "Harmony with water spirits", hash: "naga-vase" },
+      { to: "/healing-items", label: "Earth Vase", desc: "Blessing land & foundations", hash: "earth-vase" },
+      { to: "/healing-items", label: "Statues", desc: "Sacred Buddha & deity images", hash: "statues" },
+      { to: "/healing-items", label: "Thangkas", desc: "Traditional scroll paintings", hash: "thangkas" },
+      { to: "/healing-items", label: "Pendants", desc: "Wearable blessings & protection", hash: "pendants" },
     ],
   },
   {
@@ -59,7 +72,6 @@ export function SiteHeader() {
             <span className="opacity-30 hidden sm:inline">|</span>
             <Link to="/register" className="hover:text-gold transition-colors">Sign Up</Link>
             <span className="opacity-30 hidden sm:inline">|</span>
-            <Link to="/contact" className="hover:text-gold transition-colors hidden sm:inline">Contact</Link>
             <Link to="/donate" className="inline-flex items-center gap-1 bg-gold text-maroon-deep px-3 py-1 rounded font-bold hover:brightness-95 transition">
               <Heart className="size-3 fill-current" /> Donate
             </Link>
@@ -100,8 +112,9 @@ export function SiteHeader() {
                     <div className="bg-background border border-border rounded-lg shadow-lg overflow-hidden">
                       {item.children.map((child) => (
                         <Link
-                          key={child.to}
+                          key={child.label}
                           to={child.to}
+                          hash={child.hash}
                           onClick={() => setOpenGroup(null)}
                           className="block px-4 py-3 hover:bg-secondary border-b border-border/50 last:border-0"
                         >
@@ -148,8 +161,9 @@ export function SiteHeader() {
                   </div>
                   {item.children.map((child) => (
                     <Link
-                      key={child.to}
+                      key={child.label}
                       to={child.to}
+                      hash={child.hash}
                       onClick={() => setOpen(false)}
                       className="block py-2 px-3 rounded hover:bg-secondary text-sm"
                     >

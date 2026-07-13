@@ -1,14 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight, Calendar, MapPin, Heart, BookOpen, Users, Globe2, Sparkles,
-  CheckCircle2, PlayCircle, Flower2, Sun, Mountain, HandHeart,
+  PlayCircle, Sun, Mountain, Clock,
 } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import heroImg from "@/assets/hero-buddha.jpg";
 import retreatImg from "@/assets/meditation-retreat.jpg";
 import peaceImg from "@/assets/peace-prayer.jpg";
 import pilgrimImg from "@/assets/pilgrimage.jpg";
-import charityImg from "@/assets/charity.jpg";
+import { charityEvents, featuredCharityEvent } from "@/data/charityEvents";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,75 +26,89 @@ function Home() {
       <section className="relative min-h-[92vh] flex items-center overflow-hidden">
         <img src={heroImg} alt="Buddha at sunrise" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
-        <div className="container-x relative py-24 text-cream">
+        <div className="container-x relative py-20 md:py-24 text-cream">
           <div className="max-w-3xl">
-            <span className="eyebrow text-gold">BTMC Foundation India</span>
-            <h1 className="font-display text-5xl md:text-7xl font-semibold mt-4 leading-[1.05]">
-              Experience the Path to <em className="text-gold not-italic">Inner Peace</em>, Wisdom & Compassion
+            <span className="inline-flex items-center gap-2 rounded-full bg-gold/15 border border-gold/40 text-gold px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em]">
+              <Sparkles className="size-3.5" /> Healing · Meditation · Dharma Discourse · Charity
+            </span>
+            <h1 className="font-display text-5xl md:text-7xl font-semibold mt-5 leading-[1.05]">
+              A Day of <em className="text-gold not-italic">Healing, Blessings</em> & Inner Peace
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-cream/90 leading-relaxed max-w-2xl">
-              Join one of Asia's growing Buddhist meditation and humanitarian communities.
-              People of every country, religion and background are welcome to discover
-              authentic Buddhist teachings through meditation, charity and service.
+            <p className="mt-5 text-lg md:text-xl text-cream/90 leading-relaxed max-w-2xl">
+              Join a special spiritual gathering with <strong className="text-cream">Venerable Dr. Khen Rinpoche
+              Sonam Gyurme</strong> to overcome negative energies, health challenges and difficulties in
+              career, business, relationships and personal growth — and discover peace, clarity and purpose.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/register" className="btn-gold">Register Now <ArrowRight className="size-4" /></Link>
-              <Link to="/donate" className="btn-primary" style={{ background: "var(--saffron)", color: "var(--maroon-deep)" }}>Donate Now</Link>
-              <Link to="/support" className="btn-outline">Become a Sponsor</Link>
+
+            {/* Event highlight card */}
+            <div className="mt-7 inline-flex flex-col gap-3 rounded-xl bg-maroon-deep/60 backdrop-blur border border-cream/15 p-5 max-w-xl">
+              <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                <span className="inline-flex items-center gap-2"><Calendar className="size-4 text-gold shrink-0" /> {featuredCharityEvent.date}</span>
+                <span className="inline-flex items-center gap-2"><MapPin className="size-4 text-gold shrink-0" /> {featuredCharityEvent.venue}, New Delhi</span>
+                <span className="inline-flex items-center gap-2"><Clock className="size-4 text-gold shrink-0" /> Morning 9 AM – 12 PM</span>
+                <span className="inline-flex items-center gap-2"><Clock className="size-4 text-gold shrink-0" /> Afternoon 12:30 – 3 PM</span>
+              </div>
+              <div className="text-xs text-cream/70">Includes a FREE Five-Combined Protective Amulet, personally blessed by the Venerable Master.</div>
             </div>
-            <div className="mt-10 grid sm:grid-cols-2 gap-x-8 gap-y-2 max-w-xl text-sm">
-              {[
-                "Register Online for Free Weekly Retreats",
-                "Attend Healing & Meditation Programs",
-                "Support the World Peace Prayer Movement",
-                "Donate for Charity & Humanitarian Work",
-              ].map((t) => (
-                <div key={t} className="flex items-center gap-2 text-cream/90">
-                  <CheckCircle2 className="size-4 text-gold shrink-0" /> {t}
-                </div>
-              ))}
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link to="/charity-events/$slug" params={{ slug: featuredCharityEvent.slug }} hash="register" className="btn-gold">
+                Reserve Your Seat <ArrowRight className="size-4" />
+              </Link>
+              <Link to="/charity-events/$slug" params={{ slug: featuredCharityEvent.slug }} className="btn-primary" style={{ background: "var(--saffron)", color: "var(--maroon-deep)" }}>
+                Event Details
+              </Link>
+              <Link to="/donate" className="btn-outline">Donate Now</Link>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Featured charity event */}
       <section className="section-y">
-        <div className="container-x grid lg:grid-cols-2 gap-16 items-center">
+        <div className="container-x grid lg:grid-cols-2 gap-14 items-center">
+          <Link
+            to="/charity-events/$slug"
+            params={{ slug: featuredCharityEvent.slug }}
+            className="group relative aspect-[4/3] rounded-2xl overflow-hidden shadow-[var(--shadow-warm)] block"
+          >
+            <img src={featuredCharityEvent.image} alt={featuredCharityEvent.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--maroon-deep)]/85 via-transparent to-transparent" />
+            <div className="absolute top-5 left-5 inline-flex items-center gap-1.5 bg-gold text-maroon-deep text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
+              <Sparkles className="size-3.5" /> Upcoming Charity Event
+            </div>
+            <div className="absolute inset-0 grid place-items-center">
+              <PlayCircle className="size-20 text-gold drop-shadow-lg group-hover:scale-110 transition" strokeWidth={1.1} />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-cream">
+              <div className="text-xs uppercase tracking-widest text-gold">{featuredCharityEvent.city}, {featuredCharityEvent.country}</div>
+              <div className="font-display text-2xl mt-1">{featuredCharityEvent.title}</div>
+            </div>
+          </Link>
+
           <div>
-            <span className="eyebrow">About BTMC Foundation India</span>
+            <span className="eyebrow">Charity Events</span>
             <h2 className="font-display text-4xl md:text-5xl font-semibold mt-3 text-maroon">
-              A non-profit spiritual & humanitarian community rooted in the Buddha's teachings.
+              Healing, Meditation & Blessings — with the Venerable Master
             </h2>
             <div className="ornament-divider" />
             <p className="text-lg text-foreground/80 leading-relaxed">
-              BTMC Foundation India is committed to preserving and sharing the authentic
-              teachings of Lord Buddha. Our mission inspires wisdom, compassion,
-              mindfulness and ethical living through meditation retreats, Dharma
-              teachings, humanitarian projects, peace initiatives and international
-              cultural exchange.
+              Our special one-day charity events bring together healing, meditation, Dharma discourse and
+              blessings. The morning session supports emotional and spiritual well-being through authentic
+              Buddhist healing; the afternoon session offers Long Life, Health, Fortune & Prosperity
+              blessings with practical life guidance.
             </p>
             <p className="mt-4 text-foreground/70 leading-relaxed">
-              We welcome students, families, professionals, monks, nuns and sincere
-              seekers from around the world to learn and practice together.
+              Every seat is an act of generosity — your contribution supports free meditation retreats and
+              humanitarian service. A FREE Five-Combined Protective Amulet, personally blessed by the
+              Venerable Master, is offered to every participant.
             </p>
-            <div className="mt-8 flex gap-4">
-              <Link to="/about" className="btn-primary">Our Story <ArrowRight className="size-4" /></Link>
-              <Link to="/projects" className="text-maroon font-semibold underline underline-offset-4 self-center">See our projects</Link>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link to="/charity-events/$slug" params={{ slug: featuredCharityEvent.slug }} hash="register" className="btn-primary">
+                Book Your Seat <ArrowRight className="size-4" />
+              </Link>
+              <Link to="/charity-events" className="text-maroon font-semibold underline underline-offset-4 self-center">View all charity events</Link>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { icon: Flower2, label: "Meditation Retreats", n: "500+" },
-              { icon: Users, label: "Students Trained", n: "12,000+" },
-              { icon: Globe2, label: "Countries Represented", n: "45+" },
-              { icon: HandHeart, label: "Charity Programs", n: "180+" },
-            ].map((s) => (
-              <div key={s.label} className="bg-card rounded-lg p-6 shadow-[var(--shadow-soft)] border border-border">
-                <s.icon className="size-8 text-gold-deep" />
-                <div className="font-display text-3xl font-semibold text-maroon mt-4">{s.n}</div>
-                <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -207,24 +221,30 @@ function Home() {
             <p className="mt-4 text-foreground/70">Watch inspiring Dharma talks, healing sessions, meditation teachings and event highlights.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { city: "Delhi, India", img: charityImg },
-              { city: "Mumbai, India", img: retreatImg },
-              { city: "Kolkata, India", img: peaceImg },
-            ].map((v) => (
-              <div key={v.city} className="group relative aspect-[4/3] overflow-hidden rounded-lg cursor-pointer">
-                <img src={v.img} alt={v.city} loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+            {charityEvents.map((v) => (
+              <Link
+                key={v.slug}
+                to="/charity-events/$slug"
+                params={{ slug: v.slug }}
+                className="group relative aspect-[4/3] overflow-hidden rounded-lg cursor-pointer block"
+              >
+                <img src={v.image} alt={v.city} loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--maroon-deep)]/90 via-[color:var(--maroon-deep)]/30 to-transparent" />
                 <div className="absolute inset-0 grid place-items-center">
                   <PlayCircle className="size-16 text-gold drop-shadow-lg group-hover:scale-110 transition" strokeWidth={1.2} />
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-cream">
-                  <div className="text-xs uppercase tracking-widest text-gold">Charity Event</div>
-                  <div className="font-display text-xl mt-1">{v.city}</div>
+                  <div className="text-xs uppercase tracking-widest text-gold">
+                    {v.status === "upcoming" ? "Upcoming Charity Event" : "Charity Event"}
+                  </div>
+                  <div className="font-display text-xl mt-1">{v.city}, {v.country}</div>
                   <div className="text-xs opacity-80">Healing · Meditation · Dharma Teaching</div>
                 </div>
-              </div>
+              </Link>
             ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link to="/charity-events" className="btn-primary">View All Charity Events <ArrowRight className="size-4" /></Link>
           </div>
         </div>
       </section>
