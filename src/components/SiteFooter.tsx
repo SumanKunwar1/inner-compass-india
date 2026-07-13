@@ -1,6 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Youtube, Instagram, Linkedin, Twitter, MessageCircle, Send, MapPin, Phone, Mail, Globe } from "lucide-react";
-import logo from "@/assets/logo-mark.png";
+import { Facebook, Youtube, Instagram, MapPin, Phone, Mail, Globe } from "lucide-react";
+import logo from "@/assets/btmc-logo.jpg";
+
+const socials: { Icon: typeof Facebook; href: string; label: string }[] = [
+  { Icon: Facebook, href: "https://www.facebook.com/BTMCFoundation", label: "Facebook" },
+  { Icon: Instagram, href: "https://www.instagram.com/btmcfoundation/", label: "Instagram" },
+  { Icon: Youtube, href: "https://www.youtube.com/@dharmatelevision", label: "YouTube" },
+  { Icon: Globe, href: "https://www.btmcfoundation.in", label: "Website" },
+];
 
 export function SiteFooter() {
   return (
@@ -8,7 +15,7 @@ export function SiteFooter() {
       <div className="container-x py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <img src={logo} alt="" className="size-12" />
+            <img src={logo} alt="BTMC Foundation India" className="size-14 rounded-lg bg-white object-contain p-0.5" />
             <div>
               <div className="font-display text-xl">BTMC Foundation</div>
               <div className="text-xs uppercase tracking-[0.2em] opacity-70">India</div>
@@ -19,12 +26,14 @@ export function SiteFooter() {
             authentic Buddhist teachings, meditation and charitable service.
           </p>
           <div className="flex gap-2 mt-6">
-            {[Facebook, Youtube, Instagram, Linkedin, Twitter, MessageCircle, Send].map((Icon, i) => (
+            {socials.map(({ Icon, href, label }) => (
               <a
-                key={i}
-                href="#"
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener"
                 className="size-9 grid place-items-center rounded-full border border-cream/20 hover:bg-gold hover:text-maroon-deep hover:border-gold transition"
-                aria-label="Social"
+                aria-label={label}
               >
                 <Icon className="size-4" />
               </a>

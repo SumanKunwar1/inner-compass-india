@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Phone, Mail, Heart, ChevronDown } from "lucide-react";
-import logo from "@/assets/logo-mark.png";
+import logo from "@/assets/btmc-logo.jpg";
 
 type NavLeaf = { to: string; label: string; desc?: string; hash?: string };
 type NavItem = NavLeaf | { label: string; children: NavLeaf[] };
