@@ -122,6 +122,76 @@ Admin (`Authorization: Bearer <token>`):
 
 ---
 
+## Production deployment (Ubuntu VPS · PM2 · Nginx)
+
+### Frontend — TanStack Start / Nitro **node-server**
+
+The Lovable Vite wrapper defaults Nitro to the `cloudflare-module` preset, which emits a
+Cloudflare **Worker** (`export default { fetch }`) — not a Node server. Running that with
+`node .output/server/index.mjs` binds nothing and exits instantly (→ PM2 "online" but nothing
+listening → Nginx 502). This repo pins the Node preset in [`vite.config.ts`](frontend/vite.config.ts):
+
+```ts
+nitro: { preset: process.env.NITRO_PRESET || "node-server" }
+```
+
+Verify a build is a Node server (not Cloudflare):
+
+```bash
+cd frontend
+npm ci
+npm run build
+grep '"preset"' .output/nitro.json        # → "preset": "node-server"
+grep -c 'serve(' .output/server/index.mjs  # → 1  (the Cloudflare build prints 0)
+```
+
+Run it:
+
+```bash
+PORT=3000 node .output/server/index.mjs
+# ➜ Listening on: http://localhost:3000/     ← stays alive, binds the port
+# or: npm start        (same command)
+```
+
+Under PM2 (config: [`frontend/ecosystem.config.cjs`](frontend/ecosystem.config.cjs)):
+
+```bash
+cd frontend
+npm ci && npm run build
+pm2 start ecosystem.config.cjs
+pm2 save                 # + `pm2 startup` once, to survive reboot
+```
+
+The server binds `127.0.0.1:3000` (loopback); Nginx proxies public traffic to it:
+
+```nginx
+location / {
+    proxy_pass http://127.0.0.1:3000;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+> `VITE_API_URL` is baked in **at build time**. On the VPS set it to the public API URL
+> (e.g. `https://api.your-domain.com/api`) in `frontend/.env` **before** `npm run build`.
+
+### Backend — Express API
+
+```bash
+cd backend
+npm ci
+npm run seed            # first deploy only
+pm2 start src/server.js --name inner-compass-api
+pm2 save
+```
+
+Set `NODE_ENV=production` and put the real frontend origin in `CORS_ORIGIN` (the dev
+"any localhost port" allowance is disabled in production).
+
+---
+
 ## Notes
 
 - Payment screenshots are stored as base64 data URLs inside the MongoDB documents. This is
