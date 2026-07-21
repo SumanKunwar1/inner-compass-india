@@ -138,6 +138,88 @@ export const events = [
   },
 ];
 
+export const team = [
+  {
+    id: "tm-rinpoche",
+    name: "Ven. Dr. Khen Rinpoche Sonam Gyurme",
+    role: "Main Abbot & Chairman",
+    initials: "SG",
+    gradient: "linear-gradient(135deg, var(--maroon), var(--maroon-deep))",
+    order: 1,
+    socials: { facebook: "#", youtube: "#", instagram: "#" },
+  },
+  {
+    id: "tm-tenzin",
+    name: "Tenzin Norbu",
+    role: "Executive Director",
+    initials: "TN",
+    gradient: "linear-gradient(135deg, var(--gold-deep), var(--saffron))",
+    order: 2,
+    socials: { facebook: "#", linkedin: "#", twitter: "#" },
+  },
+  {
+    id: "tm-pema",
+    name: "Pema Lhamo",
+    role: "Head of Programs",
+    initials: "PL",
+    gradient: "linear-gradient(135deg, oklch(0.45 0.12 220), oklch(0.68 0.12 200))",
+    order: 3,
+    socials: { instagram: "#", linkedin: "#" },
+  },
+  {
+    id: "tm-karma",
+    name: "Karma Dorjee",
+    role: "Charity & Outreach Lead",
+    initials: "KD",
+    gradient: "linear-gradient(135deg, oklch(0.42 0.08 140), oklch(0.6 0.12 130))",
+    order: 4,
+    socials: { facebook: "#", youtube: "#" },
+  },
+  {
+    id: "tm-sonam",
+    name: "Sonam Choden",
+    role: "Meditation Coordinator",
+    initials: "SC",
+    gradient: "linear-gradient(135deg, oklch(0.55 0.16 320), oklch(0.72 0.15 350))",
+    order: 5,
+    socials: { instagram: "#", twitter: "#" },
+  },
+  {
+    id: "tm-rinchen",
+    name: "Rinchen Wangmo",
+    role: "Community & Volunteers",
+    initials: "RW",
+    gradient: "linear-gradient(135deg, oklch(0.5 0.13 45), oklch(0.72 0.16 65))",
+    order: 6,
+    socials: { facebook: "#", linkedin: "#", instagram: "#" },
+  },
+];
+
+export const settings = {
+  key: "site",
+  heroBadge: "Healing · Meditation · Dharma Discourse · Charity",
+  heroTitle: "A Day of Healing, Blessings & Inner Peace",
+  heroSubtitle:
+    "Join a special spiritual gathering with Venerable Dr. Khen Rinpoche Sonam Gyurme to overcome negative energies, health challenges and difficulties in career, business, relationships and personal growth — and discover peace, clarity and purpose.",
+  orgPhones: ["+91-8178804502", "+91-7065277012"],
+  orgEmail: "info@btmcfoundation.in",
+  orgAddress: "Head Office: Siliguri, West Bengal · Contact Office: Paharganj, New Delhi",
+  website: "www.btmcfoundation.in",
+  socials: {
+    facebook: "https://www.facebook.com/BTMCFoundation",
+    instagram: "https://www.instagram.com/btmcfoundation/",
+    youtube: "https://www.youtube.com/@dharmatelevision",
+    linkedin: "",
+    twitter: "",
+  },
+  stats: [
+    { label: "Students Trained", value: "12,400+" },
+    { label: "Retreat Participants", value: "8,600+" },
+    { label: "Countries Represented", value: "45+" },
+    { label: "Charity Programs", value: "180+" },
+  ],
+};
+
 export const products = [
   {
     id: "am-1",

@@ -1,15 +1,15 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Youtube, Instagram, MapPin, Phone, Mail, Globe } from "lucide-react";
+import { Facebook, Youtube, Instagram, Linkedin, Twitter, MapPin, Phone, Mail, Globe } from "lucide-react";
 import logo from "@/assets/btmc-logo.jpg";
+import { useSettings } from "@/lib/contentStore";
 
-const socials: { Icon: typeof Facebook; href: string; label: string }[] = [
-  { Icon: Facebook, href: "https://www.facebook.com/BTMCFoundation", label: "Facebook" },
-  { Icon: Instagram, href: "https://www.instagram.com/btmcfoundation/", label: "Instagram" },
-  { Icon: Youtube, href: "https://www.youtube.com/@dharmatelevision", label: "YouTube" },
-  { Icon: Globe, href: "https://www.btmcfoundation.in", label: "Website" },
-];
+const SOCIAL_ICONS = { facebook: Facebook, instagram: Instagram, youtube: Youtube, linkedin: Linkedin, twitter: Twitter } as const;
 
 export function SiteFooter() {
+  const settings = useSettings();
+  const socials = (Object.keys(SOCIAL_ICONS) as (keyof typeof SOCIAL_ICONS)[])
+    .map((key) => ({ key, Icon: SOCIAL_ICONS[key], href: settings.socials[key] }))
+    .filter((s) => s.href && s.href !== "#");
   return (
     <footer className="bg-maroon-deep text-cream mt-auto" style={{ background: "var(--maroon-deep)" }}>
       <div className="container-x py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
@@ -26,14 +26,14 @@ export function SiteFooter() {
             authentic Buddhist teachings, meditation and charitable service.
           </p>
           <div className="flex gap-2 mt-6">
-            {socials.map(({ Icon, href, label }) => (
+            {socials.map(({ Icon, href, key }) => (
               <a
-                key={label}
+                key={key}
                 href={href}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="size-9 grid place-items-center rounded-full border border-cream/20 hover:bg-gold hover:text-maroon-deep hover:border-gold transition"
-                aria-label={label}
+                aria-label={key}
               >
                 <Icon className="size-4" />
               </a>
@@ -74,10 +74,12 @@ export function SiteFooter() {
         <div>
           <h4 className="font-display text-lg mb-4 text-gold">Contact</h4>
           <ul className="space-y-3 text-sm opacity-90">
-            <li className="flex gap-3"><MapPin className="size-4 shrink-0 mt-0.5 text-gold" /><span>Head Office: Siliguri, West Bengal<br />Contact Office: Paharganj, New Delhi</span></li>
-            <li className="flex gap-3"><Phone className="size-4 shrink-0 mt-0.5 text-gold" /><span>+91-8178804502</span></li>
-            <li className="flex gap-3"><Mail className="size-4 shrink-0 mt-0.5 text-gold" /><span>info@btmcfoundation.in</span></li>
-            <li className="flex gap-3"><Globe className="size-4 shrink-0 mt-0.5 text-gold" /><span>www.btmcfoundation.in</span></li>
+            <li className="flex gap-3"><MapPin className="size-4 shrink-0 mt-0.5 text-gold" /><span>{settings.orgAddress}</span></li>
+            {settings.orgPhones.map((p) => (
+              <li key={p} className="flex gap-3"><Phone className="size-4 shrink-0 mt-0.5 text-gold" /><span>{p}</span></li>
+            ))}
+            <li className="flex gap-3"><Mail className="size-4 shrink-0 mt-0.5 text-gold" /><span>{settings.orgEmail}</span></li>
+            <li className="flex gap-3"><Globe className="size-4 shrink-0 mt-0.5 text-gold" /><span>{settings.website}</span></li>
           </ul>
         </div>
       </div>

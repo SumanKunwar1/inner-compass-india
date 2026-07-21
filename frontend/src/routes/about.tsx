@@ -1,51 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout, PageHero } from "@/components/Layout";
 import { Sparkles, Heart, Globe2, BookOpen, Facebook, Instagram, Linkedin, Youtube, Twitter, Tv, GraduationCap, Users, MapPin } from "lucide-react";
-
-const team = [
-  {
-    name: "Ven. Dr. Khen Rinpoche Sonam Gyurme",
-    role: "Main Abbot & Chairman",
-    initials: "SG",
-    gradient: "linear-gradient(135deg, var(--maroon), var(--maroon-deep))",
-    socials: { facebook: "#", youtube: "#", instagram: "#" },
-  },
-  {
-    name: "Tenzin Norbu",
-    role: "Executive Director",
-    initials: "TN",
-    gradient: "linear-gradient(135deg, var(--gold-deep), var(--saffron))",
-    socials: { facebook: "#", linkedin: "#", twitter: "#" },
-  },
-  {
-    name: "Pema Lhamo",
-    role: "Head of Programs",
-    initials: "PL",
-    gradient: "linear-gradient(135deg, oklch(0.45 0.12 220), oklch(0.68 0.12 200))",
-    socials: { instagram: "#", linkedin: "#" },
-  },
-  {
-    name: "Karma Dorjee",
-    role: "Charity & Outreach Lead",
-    initials: "KD",
-    gradient: "linear-gradient(135deg, oklch(0.42 0.08 140), oklch(0.6 0.12 130))",
-    socials: { facebook: "#", youtube: "#" },
-  },
-  {
-    name: "Sonam Choden",
-    role: "Meditation Coordinator",
-    initials: "SC",
-    gradient: "linear-gradient(135deg, oklch(0.55 0.16 320), oklch(0.72 0.15 350))",
-    socials: { instagram: "#", twitter: "#" },
-  },
-  {
-    name: "Rinchen Wangmo",
-    role: "Community & Volunteers",
-    initials: "RW",
-    gradient: "linear-gradient(135deg, oklch(0.5 0.13 45), oklch(0.72 0.16 65))",
-    socials: { facebook: "#", linkedin: "#", instagram: "#" },
-  },
-] as const;
+import { useTeam } from "@/lib/contentStore";
 
 const socialIcons = {
   facebook: Facebook,
@@ -66,6 +22,7 @@ export const Route = createFileRoute("/about")({
 });
 
 function About() {
+  const team = useTeam();
   return (
     <Layout>
       <PageHero eyebrow="About Us" title="A community of wisdom, compassion & service" subtitle="Preserving and sharing the authentic teachings of Lord Buddha — for people of every country, religion and background." />
@@ -175,6 +132,7 @@ function About() {
         </div>
       </section>
 
+      {team.length > 0 && (
       <section className="section-y">
         <div className="container-x">
           <div className="text-center max-w-2xl mx-auto mb-14">
@@ -184,22 +142,29 @@ function About() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {team.map((m) => (
-              <div key={m.name} className="group bg-card border border-border rounded-2xl overflow-hidden text-center hover:border-gold hover:shadow-[var(--shadow-warm)] transition">
-                <div className="relative aspect-[4/3] grid place-items-center" style={{ background: m.gradient }}>
-                  <div className="size-24 rounded-full bg-cream/15 border-2 border-cream/40 grid place-items-center font-display text-3xl text-cream backdrop-blur">
-                    {m.initials}
-                  </div>
+              <div key={m.id} className="group bg-card border border-border rounded-2xl overflow-hidden text-center hover:border-gold hover:shadow-[var(--shadow-warm)] transition">
+                <div className="relative aspect-[4/3] grid place-items-center overflow-hidden" style={{ background: m.gradient }}>
+                  {m.image ? (
+                    <img src={m.image} alt={m.name} className="absolute inset-0 w-full h-full object-cover" />
+                  ) : (
+                    <div className="size-24 rounded-full bg-cream/15 border-2 border-cream/40 grid place-items-center font-display text-3xl text-cream backdrop-blur">
+                      {m.initials}
+                    </div>
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="font-display text-xl text-maroon">{m.name}</h3>
                   <div className="text-xs uppercase tracking-widest text-gold-deep mt-1">{m.role}</div>
                   <div className="mt-4 flex items-center justify-center gap-2">
-                    {Object.entries(m.socials).map(([key, href]) => {
+                    {Object.entries(m.socials).filter(([, href]) => href && href !== "#").map(([key, href]) => {
                       const Icon = socialIcons[key as keyof typeof socialIcons];
+                      if (!Icon) return null;
                       return (
                         <a
                           key={key}
                           href={href}
+                          target="_blank"
+                          rel="noreferrer"
                           aria-label={`${m.name} on ${key}`}
                           className="size-9 grid place-items-center rounded-full border border-border text-maroon hover:bg-maroon hover:text-cream hover:border-maroon transition"
                         >
@@ -214,6 +179,7 @@ function About() {
           </div>
         </div>
       </section>
+      )}
 
       <section className="section-y bg-secondary/50">
         <div className="container-x">

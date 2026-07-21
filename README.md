@@ -101,6 +101,10 @@ Public (no auth):
 | `GET` | `/api/products` | List healing items (`?category=`) |
 | `GET` | `/api/products/:id` | Single product |
 | `POST` | `/api/orders` | Place an order |
+| `POST` | `/api/donations` | Submit a donation |
+| `POST` | `/api/messages` | Send a contact message |
+| `GET` | `/api/team` | List team members |
+| `GET` | `/api/settings` | Site settings (hero, contact, socials, stats) |
 
 Admin (`Authorization: Bearer <token>`):
 
@@ -112,6 +116,10 @@ Admin (`Authorization: Bearer <token>`):
 | `GET`/`PATCH`/`DELETE` | `/api/bookings[/:id]` | Manage bookings |
 | `POST`/`PUT`/`DELETE` | `/api/products[/:id]` | Manage products |
 | `GET`/`PATCH`/`DELETE` | `/api/orders[/:id]` | Manage orders |
+| `GET`/`PATCH`/`DELETE` | `/api/donations[/:id]` | Manage donations |
+| `GET`/`PATCH`/`DELETE` | `/api/messages[/:id]` | Manage contact messages |
+| `POST`/`PUT`/`DELETE` | `/api/team[/:id]` | Manage team members |
+| `PUT` | `/api/settings` | Update site settings |
 
 ### Server-enforced rules
 

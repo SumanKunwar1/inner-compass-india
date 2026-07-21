@@ -10,6 +10,7 @@ import peaceImg from "@/assets/peace-prayer.jpg";
 import pilgrimImg from "@/assets/pilgrimage.jpg";
 import { featuredCharityEvent } from "@/data/charityEvents";
 import { useEvents } from "@/lib/charityStore";
+import { useSettings } from "@/lib/contentStore";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const events = useEvents();
+  const settings = useSettings();
   const featured = events.find((e) => e.status === "upcoming") ?? events[0] ?? featuredCharityEvent;
   return (
     <Layout>
@@ -32,15 +34,13 @@ function Home() {
         <div className="container-x relative py-20 md:py-24 text-cream">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full bg-gold/15 border border-gold/40 text-gold px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em]">
-              <Sparkles className="size-3.5" /> Healing · Meditation · Dharma Discourse · Charity
+              <Sparkles className="size-3.5" /> {settings.heroBadge}
             </span>
             <h1 className="font-display text-5xl md:text-7xl font-semibold mt-5 leading-[1.05]">
-              A Day of <em className="text-gold not-italic">Healing, Blessings</em> & Inner Peace
+              {settings.heroTitle}
             </h1>
             <p className="mt-5 text-lg md:text-xl text-cream/90 leading-relaxed max-w-2xl">
-              Join a special spiritual gathering with <strong className="text-cream">Venerable Dr. Khen Rinpoche
-              Sonam Gyurme</strong> to overcome negative energies, health challenges and difficulties in
-              career, business, relationships and personal growth — and discover peace, clarity and purpose.
+              {settings.heroSubtitle || "Join a special spiritual gathering with Venerable Dr. Khen Rinpoche Sonam Gyurme to overcome negative energies, health challenges and difficulties in career, business, relationships and personal growth — and discover peace, clarity and purpose."}
             </p>
 
             {/* Event highlight card */}

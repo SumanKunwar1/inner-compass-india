@@ -1,8 +1,9 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, CalendarHeart, Inbox, LogOut, ExternalLink, Lock, Loader2, Menu, X, Gem, ShoppingBag } from "lucide-react";
+import { LayoutDashboard, CalendarHeart, Inbox, LogOut, ExternalLink, Lock, Loader2, Menu, X, Gem, ShoppingBag, HeartHandshake, Mail, Users, Settings } from "lucide-react";
 import { useIsAuthed, login, logout } from "@/lib/charityStore";
 import { resetOrdersSession } from "@/lib/shopStore";
+import { resetSubmissionsSession } from "@/lib/submissionsStore";
 import logo from "@/assets/btmc-logo.jpg";
 
 export const Route = createFileRoute("/admin")({
@@ -27,6 +28,20 @@ const NAV_SECTIONS = [
     items: [
       { to: "/admin/healing-items", label: "Products", icon: Gem },
       { to: "/admin/orders", label: "Orders", icon: ShoppingBag },
+    ],
+  },
+  {
+    heading: "Inbox",
+    items: [
+      { to: "/admin/donations", label: "Donations", icon: HeartHandshake },
+      { to: "/admin/messages", label: "Messages", icon: Mail },
+    ],
+  },
+  {
+    heading: "Content",
+    items: [
+      { to: "/admin/team", label: "Team", icon: Users },
+      { to: "/admin/settings", label: "Site Settings", icon: Settings },
     ],
   },
 ];
@@ -136,7 +151,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         <a href="/" target="_blank" rel="noreferrer" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-cream/80 hover:bg-cream/10 hover:text-cream transition">
           <ExternalLink className="size-4" /> View site
         </a>
-        <button onClick={() => { logout(); resetOrdersSession(); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-cream/80 hover:bg-cream/10 hover:text-cream transition">
+        <button onClick={() => { logout(); resetOrdersSession(); resetSubmissionsSession(); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-cream/80 hover:bg-cream/10 hover:text-cream transition">
           <LogOut className="size-4" /> Logout
         </button>
       </div>

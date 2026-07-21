@@ -29,8 +29,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CharityEventsIndexRouteImport } from './routes/charity-events.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as CharityEventsSlugRouteImport } from './routes/charity-events.$slug'
+import { Route as AdminTeamRouteImport } from './routes/admin.team'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
+import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
 import { Route as AdminHealingItemsRouteImport } from './routes/admin.healing-items'
+import { Route as AdminDonationsRouteImport } from './routes/admin.donations'
 import { Route as AdminCharityEventsRouteImport } from './routes/admin.charity-events'
 import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
 
@@ -134,14 +138,34 @@ const CharityEventsSlugRoute = CharityEventsSlugRouteImport.update({
   path: '/charity-events/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminOrdersRoute = AdminOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminMessagesRoute = AdminMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminHealingItemsRoute = AdminHealingItemsRouteImport.update({
   id: '/healing-items',
   path: '/healing-items',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDonationsRoute = AdminDonationsRouteImport.update({
+  id: '/donations',
+  path: '/donations',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminCharityEventsRoute = AdminCharityEventsRouteImport.update({
@@ -175,8 +199,12 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/charity-events': typeof AdminCharityEventsRoute
+  '/admin/donations': typeof AdminDonationsRoute
   '/admin/healing-items': typeof AdminHealingItemsRoute
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/team': typeof AdminTeamRoute
   '/charity-events/$slug': typeof CharityEventsSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/charity-events/': typeof CharityEventsIndexRoute
@@ -200,8 +228,12 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/charity-events': typeof AdminCharityEventsRoute
+  '/admin/donations': typeof AdminDonationsRoute
   '/admin/healing-items': typeof AdminHealingItemsRoute
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/team': typeof AdminTeamRoute
   '/charity-events/$slug': typeof CharityEventsSlugRoute
   '/admin': typeof AdminIndexRoute
   '/charity-events': typeof CharityEventsIndexRoute
@@ -227,8 +259,12 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/charity-events': typeof AdminCharityEventsRoute
+  '/admin/donations': typeof AdminDonationsRoute
   '/admin/healing-items': typeof AdminHealingItemsRoute
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/team': typeof AdminTeamRoute
   '/charity-events/$slug': typeof CharityEventsSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/charity-events/': typeof CharityEventsIndexRoute
@@ -255,8 +291,12 @@ export interface FileRouteTypes {
     | '/support'
     | '/admin/bookings'
     | '/admin/charity-events'
+    | '/admin/donations'
     | '/admin/healing-items'
+    | '/admin/messages'
     | '/admin/orders'
+    | '/admin/settings'
+    | '/admin/team'
     | '/charity-events/$slug'
     | '/admin/'
     | '/charity-events/'
@@ -280,8 +320,12 @@ export interface FileRouteTypes {
     | '/support'
     | '/admin/bookings'
     | '/admin/charity-events'
+    | '/admin/donations'
     | '/admin/healing-items'
+    | '/admin/messages'
     | '/admin/orders'
+    | '/admin/settings'
+    | '/admin/team'
     | '/charity-events/$slug'
     | '/admin'
     | '/charity-events'
@@ -306,8 +350,12 @@ export interface FileRouteTypes {
     | '/support'
     | '/admin/bookings'
     | '/admin/charity-events'
+    | '/admin/donations'
     | '/admin/healing-items'
+    | '/admin/messages'
     | '/admin/orders'
+    | '/admin/settings'
+    | '/admin/team'
     | '/charity-events/$slug'
     | '/admin/'
     | '/charity-events/'
@@ -477,6 +525,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CharityEventsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/team': {
+      id: '/admin/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/orders': {
       id: '/admin/orders'
       path: '/orders'
@@ -484,11 +546,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminOrdersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/messages': {
+      id: '/admin/messages'
+      path: '/messages'
+      fullPath: '/admin/messages'
+      preLoaderRoute: typeof AdminMessagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/healing-items': {
       id: '/admin/healing-items'
       path: '/healing-items'
       fullPath: '/admin/healing-items'
       preLoaderRoute: typeof AdminHealingItemsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/donations': {
+      id: '/admin/donations'
+      path: '/donations'
+      fullPath: '/admin/donations'
+      preLoaderRoute: typeof AdminDonationsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/charity-events': {
@@ -511,16 +587,24 @@ declare module '@tanstack/react-router' {
 interface AdminRouteChildren {
   AdminBookingsRoute: typeof AdminBookingsRoute
   AdminCharityEventsRoute: typeof AdminCharityEventsRoute
+  AdminDonationsRoute: typeof AdminDonationsRoute
   AdminHealingItemsRoute: typeof AdminHealingItemsRoute
+  AdminMessagesRoute: typeof AdminMessagesRoute
   AdminOrdersRoute: typeof AdminOrdersRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTeamRoute: typeof AdminTeamRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminBookingsRoute: AdminBookingsRoute,
   AdminCharityEventsRoute: AdminCharityEventsRoute,
+  AdminDonationsRoute: AdminDonationsRoute,
   AdminHealingItemsRoute: AdminHealingItemsRoute,
+  AdminMessagesRoute: AdminMessagesRoute,
   AdminOrdersRoute: AdminOrdersRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTeamRoute: AdminTeamRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 

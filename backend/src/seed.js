@@ -5,7 +5,9 @@ import { connectDB } from "./config/db.js";
 import { CharityEvent } from "./models/CharityEvent.js";
 import { Product } from "./models/Product.js";
 import { AdminUser } from "./models/AdminUser.js";
-import { events, products } from "./seedData.js";
+import { TeamMember } from "./models/TeamMember.js";
+import { SiteSettings } from "./models/SiteSettings.js";
+import { events, products, team, settings } from "./seedData.js";
 
 /**
  * Seeds initial content and the admin account.
@@ -57,6 +59,29 @@ async function seed() {
     created++;
   }
   console.log(`✔ Products — ${created} upserted, ${skipped} left untouched`);
+
+  // Team
+  created = 0;
+  skipped = 0;
+  for (const m of team) {
+    const exists = await TeamMember.findOne({ id: m.id });
+    if (exists && !force) {
+      skipped++;
+      continue;
+    }
+    await TeamMember.findOneAndUpdate({ id: m.id }, m, { upsert: true, new: true, setDefaultsOnInsert: true });
+    created++;
+  }
+  console.log(`✔ Team — ${created} upserted, ${skipped} left untouched`);
+
+  // Site settings (singleton) — only create if missing, unless forced.
+  const existingSettings = await SiteSettings.findOne({ key: "site" });
+  if (existingSettings && !force) {
+    console.log("• Site settings already exist");
+  } else {
+    await SiteSettings.findOneAndUpdate({ key: "site" }, settings, { upsert: true, new: true, setDefaultsOnInsert: true });
+    console.log("✔ Site settings upserted");
+  }
 
   if (skipped > 0 && !force) console.log("  (re-run with --force to overwrite existing records)");
 

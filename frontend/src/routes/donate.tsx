@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Layout, PageHero } from "@/components/Layout";
 import { Heart, ShieldCheck, HandHeart, Sparkles, BookOpen } from "lucide-react";
 import { PaymentForm } from "@/components/PaymentForm";
+import { addDonation } from "@/lib/submissionsStore";
 
 export const Route = createFileRoute("/donate")({
   head: () => ({
@@ -35,6 +36,7 @@ function Donate() {
               <PaymentForm
                 context="Donation"
                 presetAmounts={[500, 1100, 2100, 5100, 11000, 21000]}
+                onRecord={(payload) => addDonation(payload)}
               />
             </div>
           </div>
