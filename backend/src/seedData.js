@@ -220,7 +220,85 @@ export const settings = {
   ],
 };
 
+/**
+ * Shop categories. These used to be hardcoded in the frontend and shown as a header
+ * dropdown; they are seeded here so the admin panel owns them.
+ */
+export const categories = [
+  {
+    id: "amulets",
+    name: "Amulets",
+    tagline: "Srungwa · Buddhist protective amulets",
+    description:
+      "Sacred protective amulets prepared according to Buddhist Astrology and Tantra — combining gold, silver, precious gemstones, medicinal herbs and powerful mantras.",
+    icon: "Shield",
+    gradient: "linear-gradient(135deg, oklch(0.35 0.13 25), oklch(0.68 0.19 55))",
+    sortOrder: 1,
+  },
+  {
+    id: "treasure-vase",
+    name: "Treasure Vase",
+    tagline: "Wealth & abundance vases",
+    description:
+      "Consecrated Treasure Vases (Terbum) filled with sacred substances to attract prosperity, abundance and auspicious energy to homes and businesses.",
+    icon: "Gem",
+    gradient: "linear-gradient(135deg, oklch(0.65 0.15 75), oklch(0.78 0.14 82))",
+    sortOrder: 2,
+  },
+  {
+    id: "naga-vase",
+    name: "Naga Vase",
+    tagline: "Harmony with the water spirits",
+    description:
+      "Naga Vases (Lubum) prepared to restore harmony with the Naga spirits — traditionally offered for health, healing of skin ailments and environmental balance.",
+    icon: "Waves",
+    gradient: "linear-gradient(135deg, oklch(0.45 0.12 220), oklch(0.68 0.12 200))",
+    sortOrder: 3,
+  },
+  {
+    id: "earth-vase",
+    name: "Earth Vase",
+    tagline: "Blessing the land & foundations",
+    description:
+      "Earth Vases (Sabum) for pacifying local earth spirits and blessing land, foundations and new construction with stability and protection.",
+    icon: "Mountain",
+    gradient: "linear-gradient(135deg, oklch(0.42 0.08 140), oklch(0.6 0.12 130))",
+    sortOrder: 4,
+  },
+  {
+    id: "statues",
+    name: "Statues",
+    tagline: "Sacred Buddha & deity images",
+    description:
+      "Finely crafted statues of the Buddha, Bodhisattvas and Yidam deities — hand-finished and available for consecration as objects of daily practice.",
+    icon: "Landmark",
+    gradient: "linear-gradient(135deg, oklch(0.5 0.13 45), oklch(0.72 0.16 65))",
+    sortOrder: 5,
+  },
+  {
+    id: "thangkas",
+    name: "Thangkas",
+    tagline: "Traditional scroll paintings",
+    description:
+      "Hand-painted Thangkas depicting Buddhas, deities and mandalas — created by skilled artists using traditional mineral pigments and gold.",
+    icon: "Image",
+    gradient: "linear-gradient(135deg, oklch(0.4 0.14 20), oklch(0.6 0.16 40))",
+    sortOrder: 6,
+  },
+  {
+    id: "pendants",
+    name: "Pendants",
+    tagline: "Wearable blessings & protection",
+    description:
+      "Elegant pendants set with sacred images, mantras and gemstones — beautifully crafted for daily wear and continuous blessing.",
+    icon: "Sparkles",
+    gradient: "linear-gradient(135deg, oklch(0.55 0.16 320), oklch(0.72 0.15 350))",
+    sortOrder: 7,
+  },
+];
+
 export const products = [
+
   {
     id: "am-1",
     category: "amulets",

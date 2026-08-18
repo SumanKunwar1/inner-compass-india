@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-r
 import { useEffect, useState } from "react";
 import { LayoutDashboard, CalendarHeart, Inbox, LogOut, ExternalLink, Lock, Loader2, Menu, X, Gem, ShoppingBag, HeartHandshake, Mail, Users, Settings } from "lucide-react";
 import { useIsAuthed, login, logout } from "@/lib/charityStore";
-import { resetOrdersSession } from "@/lib/shopStore";
+import { resetOrdersSession, refreshProducts } from "@/lib/shopStore";
 import { resetSubmissionsSession } from "@/lib/submissionsStore";
 import logo from "@/assets/btmc-logo.jpg";
 
@@ -171,6 +171,8 @@ function AdminLogin() {
     setError(null);
     try {
       await login(email, password);
+      // Re-read the catalogue with the new session so drafts become visible.
+      refreshProducts().catch(() => {});
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign in failed");
     } finally {

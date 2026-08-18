@@ -6,6 +6,14 @@ import {
   Landmark,
   Image as ImageIcon,
   Sparkles,
+  Flame,
+  Heart,
+  Star,
+  Crown,
+  Leaf,
+  Sun,
+  Moon,
+  Package,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -17,27 +25,119 @@ export type HealingCategory = {
   icon: LucideIcon;
   // decorative gradient used for product/category art (no external images required)
   gradient: string;
+  sortOrder?: number;
+  visible?: boolean;
 };
+
+/** Icon names the admin panel can choose from, mapped to their components. */
+export const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  Shield,
+  Gem,
+  Waves,
+  Mountain,
+  Landmark,
+  Image: ImageIcon,
+  Sparkles,
+  Flame,
+  Heart,
+  Star,
+  Crown,
+  Leaf,
+  Sun,
+  Moon,
+  Package,
+};
+
+export const CATEGORY_ICON_NAMES = Object.keys(CATEGORY_ICONS);
+
+export const iconFor = (name?: string): LucideIcon => CATEGORY_ICONS[name ?? ""] ?? Sparkles;
+
+export const DEFAULT_GRADIENT =
+  "linear-gradient(135deg, oklch(0.35 0.13 25), oklch(0.68 0.19 55))";
+
+/** Stock states a product can advertise. */
+export const STOCK_STATUSES = [
+  { value: "in-stock", label: "In stock" },
+  { value: "made-to-order", label: "Made to order" },
+  { value: "low-stock", label: "Only a few left" },
+  { value: "out-of-stock", label: "Out of stock" },
+] as const;
 
 export type HealingProduct = {
   id: string;
+  /** Human-readable URL slug. Falls back to `id`. */
+  slug?: string;
   category: string; // category id
   name: string;
+  /** One-line subtitle shown under the name. */
   blessing: string;
+  sku?: string;
+  badge?: string;
+  tags?: string[];
+
   /** Display price, e.g. "₹5,100" */
   price: string;
   /** Numeric price used to pre-fill the order form */
   priceValue: number;
+  /** Optional struck-through "was" price. */
+  compareAtPrice?: number;
+  currency?: string;
+
+  stockStatus?: string;
+  stock?: number | null;
+  published?: boolean;
+  featured?: boolean;
+  sortOrder?: number;
+
   rating: number;
   reviews: number;
-  badge?: string;
-  description: string;
-  includes: string[];
-  /** Optional product photo (URL or data URL). Falls back to the category artwork. */
+
+  /** Cover photo (URL or data URL). Falls back to the category artwork. */
   image?: string;
+  /** Full gallery, cover included. */
+  images?: string[];
+  coverIndex?: number;
+  /** "contain" shows the whole photo; "cover" fills the frame and crops. */
+  imageFit?: "contain" | "cover";
+
+  description: string;
   /** Optional rich-text (HTML) description authored in the admin panel. */
   descriptionHtml?: string;
+  includes: string[];
+  benefits?: string[];
+  howToUse?: string;
+  careInstructions?: string;
+  shippingInfo?: string;
+
+  materials?: string;
+  dimensions?: string;
+  weight?: string;
+  origin?: string;
+  consecratedBy?: string;
+  deliveryTime?: string;
+
+  metaTitle?: string;
+  metaDescription?: string;
+
+  createdAt?: string;
+  updatedAt?: string;
 };
+
+/** Every gallery image for a product, tolerating older single-image records. */
+export function productImages(p: Pick<HealingProduct, "images" | "image">): string[] {
+  if (p.images?.length) return p.images.filter(Boolean);
+  return p.image ? [p.image] : [];
+}
+
+/** The image to lead with in listings. */
+export function coverImage(p: Pick<HealingProduct, "images" | "image" | "coverIndex">): string {
+  const list = productImages(p);
+  if (!list.length) return "";
+  return list[Math.min(p.coverIndex ?? 0, list.length - 1)] ?? list[0];
+}
+
+/** Public URL for a product detail page. */
+export const productHref = (p: Pick<HealingProduct, "id" | "slug">) => p.slug || p.id;
 
 export const healingCategories: HealingCategory[] = [
   {

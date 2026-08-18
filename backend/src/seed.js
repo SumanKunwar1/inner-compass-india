@@ -4,10 +4,11 @@ import mongoose from "mongoose";
 import { connectDB } from "./config/db.js";
 import { CharityEvent } from "./models/CharityEvent.js";
 import { Product } from "./models/Product.js";
+import { Category } from "./models/Category.js";
 import { AdminUser } from "./models/AdminUser.js";
 import { TeamMember } from "./models/TeamMember.js";
 import { SiteSettings } from "./models/SiteSettings.js";
-import { events, products, team, settings } from "./seedData.js";
+import { events, products, team, settings, categories } from "./seedData.js";
 
 /**
  * Seeds initial content and the admin account.
@@ -45,6 +46,20 @@ async function seed() {
     created++;
   }
   console.log(`✔ Events — ${created} upserted, ${skipped} left untouched`);
+
+  // Categories
+  created = 0;
+  skipped = 0;
+  for (const c of categories) {
+    const exists = await Category.findOne({ id: c.id });
+    if (exists && !force) {
+      skipped++;
+      continue;
+    }
+    await Category.findOneAndUpdate({ id: c.id }, c, { upsert: true, new: true, setDefaultsOnInsert: true });
+    created++;
+  }
+  console.log(`✔ Categories — ${created} upserted, ${skipped} left untouched`);
 
   // Products
   created = 0;

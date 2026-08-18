@@ -18,7 +18,6 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PeacePrayersRouteImport } from './routes/peace-prayers'
 import { Route as OnlineClassesRouteImport } from './routes/online-classes'
-import { Route as HealingItemsRouteImport } from './routes/healing-items'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DharmaCampaignRouteImport } from './routes/dharma-campaign'
@@ -26,8 +25,10 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HealingItemsIndexRouteImport } from './routes/healing-items.index'
 import { Route as CharityEventsIndexRouteImport } from './routes/charity-events.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as HealingItemsIdRouteImport } from './routes/healing-items.$id'
 import { Route as CharityEventsSlugRouteImport } from './routes/charity-events.$slug'
 import { Route as AdminTeamRouteImport } from './routes/admin.team'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
@@ -83,11 +84,6 @@ const OnlineClassesRoute = OnlineClassesRouteImport.update({
   path: '/online-classes',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HealingItemsRoute = HealingItemsRouteImport.update({
-  id: '/healing-items',
-  path: '/healing-items',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
@@ -123,6 +119,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HealingItemsIndexRoute = HealingItemsIndexRouteImport.update({
+  id: '/healing-items/',
+  path: '/healing-items/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CharityEventsIndexRoute = CharityEventsIndexRouteImport.update({
   id: '/charity-events/',
   path: '/charity-events/',
@@ -132,6 +133,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const HealingItemsIdRoute = HealingItemsIdRouteImport.update({
+  id: '/healing-items/$id',
+  path: '/healing-items/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CharityEventsSlugRoute = CharityEventsSlugRouteImport.update({
   id: '/charity-events/$slug',
@@ -187,7 +193,6 @@ export interface FileRoutesByFullPath {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
-  '/healing-items': typeof HealingItemsRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -206,8 +211,10 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/charity-events/$slug': typeof CharityEventsSlugRoute
+  '/healing-items/$id': typeof HealingItemsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/charity-events/': typeof CharityEventsIndexRoute
+  '/healing-items/': typeof HealingItemsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -216,7 +223,6 @@ export interface FileRoutesByTo {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
-  '/healing-items': typeof HealingItemsRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -235,8 +241,10 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/charity-events/$slug': typeof CharityEventsSlugRoute
+  '/healing-items/$id': typeof HealingItemsIdRoute
   '/admin': typeof AdminIndexRoute
   '/charity-events': typeof CharityEventsIndexRoute
+  '/healing-items': typeof HealingItemsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -247,7 +255,6 @@ export interface FileRoutesById {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
-  '/healing-items': typeof HealingItemsRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -266,8 +273,10 @@ export interface FileRoutesById {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/charity-events/$slug': typeof CharityEventsSlugRoute
+  '/healing-items/$id': typeof HealingItemsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/charity-events/': typeof CharityEventsIndexRoute
+  '/healing-items/': typeof HealingItemsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -279,7 +288,6 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
-    | '/healing-items'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -298,8 +306,10 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/charity-events/$slug'
+    | '/healing-items/$id'
     | '/admin/'
     | '/charity-events/'
+    | '/healing-items/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -308,7 +318,6 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
-    | '/healing-items'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -327,8 +336,10 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/charity-events/$slug'
+    | '/healing-items/$id'
     | '/admin'
     | '/charity-events'
+    | '/healing-items'
   id:
     | '__root__'
     | '/'
@@ -338,7 +349,6 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
-    | '/healing-items'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -357,8 +367,10 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/charity-events/$slug'
+    | '/healing-items/$id'
     | '/admin/'
     | '/charity-events/'
+    | '/healing-items/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -369,7 +381,6 @@ export interface RootRouteChildren {
   DharmaCampaignRoute: typeof DharmaCampaignRoute
   DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
-  HealingItemsRoute: typeof HealingItemsRoute
   OnlineClassesRoute: typeof OnlineClassesRoute
   PeacePrayersRoute: typeof PeacePrayersRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -380,7 +391,9 @@ export interface RootRouteChildren {
   SponsorsRoute: typeof SponsorsRoute
   SupportRoute: typeof SupportRoute
   CharityEventsSlugRoute: typeof CharityEventsSlugRoute
+  HealingItemsIdRoute: typeof HealingItemsIdRoute
   CharityEventsIndexRoute: typeof CharityEventsIndexRoute
+  HealingItemsIndexRoute: typeof HealingItemsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -448,13 +461,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnlineClassesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/healing-items': {
-      id: '/healing-items'
-      path: '/healing-items'
-      fullPath: '/healing-items'
-      preLoaderRoute: typeof HealingItemsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -504,6 +510,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/healing-items/': {
+      id: '/healing-items/'
+      path: '/healing-items'
+      fullPath: '/healing-items/'
+      preLoaderRoute: typeof HealingItemsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/charity-events/': {
       id: '/charity-events/'
       path: '/charity-events'
@@ -517,6 +530,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/healing-items/$id': {
+      id: '/healing-items/$id'
+      path: '/healing-items/$id'
+      fullPath: '/healing-items/$id'
+      preLoaderRoute: typeof HealingItemsIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/charity-events/$slug': {
       id: '/charity-events/$slug'
@@ -618,7 +638,6 @@ const rootRouteChildren: RootRouteChildren = {
   DharmaCampaignRoute: DharmaCampaignRoute,
   DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
-  HealingItemsRoute: HealingItemsRoute,
   OnlineClassesRoute: OnlineClassesRoute,
   PeacePrayersRoute: PeacePrayersRoute,
   ProjectsRoute: ProjectsRoute,
@@ -629,7 +648,9 @@ const rootRouteChildren: RootRouteChildren = {
   SponsorsRoute: SponsorsRoute,
   SupportRoute: SupportRoute,
   CharityEventsSlugRoute: CharityEventsSlugRoute,
+  HealingItemsIdRoute: HealingItemsIdRoute,
   CharityEventsIndexRoute: CharityEventsIndexRoute,
+  HealingItemsIndexRoute: HealingItemsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

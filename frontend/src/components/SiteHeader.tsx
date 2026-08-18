@@ -18,18 +18,8 @@ const nav: NavItem[] = [
       { to: "/peace-prayers", label: "World Peace Prayers", desc: "Global prayer ceremonies" },
     ],
   },
-  {
-    label: "Healing Items",
-    children: [
-      { to: "/healing-items", label: "Amulets", desc: "Protective Srungwa amulets", hash: "amulets" },
-      { to: "/healing-items", label: "Treasure Vase", desc: "Wealth & abundance vases", hash: "treasure-vase" },
-      { to: "/healing-items", label: "Naga Vase", desc: "Harmony with water spirits", hash: "naga-vase" },
-      { to: "/healing-items", label: "Earth Vase", desc: "Blessing land & foundations", hash: "earth-vase" },
-      { to: "/healing-items", label: "Statues", desc: "Sacred Buddha & deity images", hash: "statues" },
-      { to: "/healing-items", label: "Thangkas", desc: "Traditional scroll paintings", hash: "thangkas" },
-      { to: "/healing-items", label: "Pendants", desc: "Wearable blessings & protection", hash: "pendants" },
-    ],
-  },
+  // Categories now live in the shop page's filter panel rather than a nav dropdown.
+  { to: "/healing-items", label: "Healing Items" },
   {
     label: "Get Involved",
     children: [
