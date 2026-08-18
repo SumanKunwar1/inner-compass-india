@@ -5,10 +5,12 @@ import { connectDB } from "./config/db.js";
 import { CharityEvent } from "./models/CharityEvent.js";
 import { Product } from "./models/Product.js";
 import { Category } from "./models/Category.js";
+import { SponsorshipPlan } from "./models/SponsorshipPlan.js";
 import { AdminUser } from "./models/AdminUser.js";
 import { TeamMember } from "./models/TeamMember.js";
 import { SiteSettings } from "./models/SiteSettings.js";
 import { events, products, team, settings, categories } from "./seedData.js";
+import { plans } from "./seedPlans.js";
 
 /**
  * Seeds initial content and the admin account.
@@ -74,6 +76,20 @@ async function seed() {
     created++;
   }
   console.log(`✔ Products — ${created} upserted, ${skipped} left untouched`);
+
+  // Membership & sponsorship plans
+  created = 0;
+  skipped = 0;
+  for (const pl of plans) {
+    const exists = await SponsorshipPlan.findOne({ id: pl.id });
+    if (exists && !force) {
+      skipped++;
+      continue;
+    }
+    await SponsorshipPlan.findOneAndUpdate({ id: pl.id }, pl, { upsert: true, new: true, setDefaultsOnInsert: true });
+    created++;
+  }
+  console.log(`✔ Plans — ${created} upserted, ${skipped} left untouched`);
 
   // Team
   created = 0;
