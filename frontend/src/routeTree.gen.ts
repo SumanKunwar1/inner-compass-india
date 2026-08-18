@@ -18,6 +18,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PeacePrayersRouteImport } from './routes/peace-prayers'
 import { Route as OnlineClassesRouteImport } from './routes/online-classes'
+import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DharmaCampaignRouteImport } from './routes/dharma-campaign'
@@ -82,6 +83,11 @@ const PeacePrayersRoute = PeacePrayersRouteImport.update({
 const OnlineClassesRoute = OnlineClassesRouteImport.update({
   id: '/online-classes',
   path: '/online-classes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembershipRoute = MembershipRouteImport.update({
+  id: '/membership',
+  path: '/membership',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsRoute = EventsRouteImport.update({
@@ -193,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
+  '/membership': typeof MembershipRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -223,6 +230,7 @@ export interface FileRoutesByTo {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
+  '/membership': typeof MembershipRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -255,6 +263,7 @@ export interface FileRoutesById {
   '/dharma-campaign': typeof DharmaCampaignRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
+  '/membership': typeof MembershipRoute
   '/online-classes': typeof OnlineClassesRoute
   '/peace-prayers': typeof PeacePrayersRoute
   '/projects': typeof ProjectsRoute
@@ -288,6 +297,7 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
+    | '/membership'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -318,6 +328,7 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
+    | '/membership'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -349,6 +360,7 @@ export interface FileRouteTypes {
     | '/dharma-campaign'
     | '/donate'
     | '/events'
+    | '/membership'
     | '/online-classes'
     | '/peace-prayers'
     | '/projects'
@@ -381,6 +393,7 @@ export interface RootRouteChildren {
   DharmaCampaignRoute: typeof DharmaCampaignRoute
   DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
+  MembershipRoute: typeof MembershipRoute
   OnlineClassesRoute: typeof OnlineClassesRoute
   PeacePrayersRoute: typeof PeacePrayersRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -459,6 +472,13 @@ declare module '@tanstack/react-router' {
       path: '/online-classes'
       fullPath: '/online-classes'
       preLoaderRoute: typeof OnlineClassesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/membership': {
+      id: '/membership'
+      path: '/membership'
+      fullPath: '/membership'
+      preLoaderRoute: typeof MembershipRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events': {
@@ -638,6 +658,7 @@ const rootRouteChildren: RootRouteChildren = {
   DharmaCampaignRoute: DharmaCampaignRoute,
   DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
+  MembershipRoute: MembershipRoute,
   OnlineClassesRoute: OnlineClassesRoute,
   PeacePrayersRoute: PeacePrayersRoute,
   ProjectsRoute: ProjectsRoute,

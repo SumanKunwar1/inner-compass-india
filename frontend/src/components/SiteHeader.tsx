@@ -25,6 +25,7 @@ const nav: NavItem[] = [
     children: [
       { to: "/services", label: "Services", desc: "Spiritual services we offer" },
       { to: "/projects", label: "Projects", desc: "Construction & community" },
+      { to: "/membership", label: "Membership", desc: "Join from ₹9 a year" },
       { to: "/dharma-campaign", label: "Dharma Ideal Campaign", desc: "Volunteer & sponsor" },
       { to: "/register", label: "Register", desc: "Sign up for retreats" },
     ],
@@ -32,6 +33,7 @@ const nav: NavItem[] = [
   {
     label: "Sponsorship",
     children: [
+      { to: "/dharma-campaign", label: "Dharma Ideal Sponsorship", desc: "Gem, Decade, Community & Corporate" },
       { to: "/sponsors", label: "Event Sponsors", desc: "Sponsorship tiers" },
       { to: "/spiritual-trips", label: "Spiritual Trips", desc: "Pilgrimage journeys" },
       { to: "/support", label: "Support Us", desc: "Ways to contribute" },

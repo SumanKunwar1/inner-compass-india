@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout, PageHero } from "@/components/Layout";
-import { Crown } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Crown, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/sponsors")({
   head: () => ({
@@ -39,6 +40,23 @@ function Sponsors() {
               <p className="text-sm text-muted-foreground mt-1">{s.d}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Pointer to the structured Dharma Ideal programme */}
+      <section className="border-t border-border bg-secondary/30">
+        <div className="container-x py-14 text-center max-w-3xl mx-auto">
+          <span className="eyebrow">Looking for a formal sponsorship programme?</span>
+          <h2 className="font-display text-3xl font-semibold mt-2 text-maroon">Dharma Ideal Sponsorship</h2>
+          <p className="text-foreground/75 mt-4 leading-relaxed">
+            Event sponsorship above is arranged per programme. For a defined annual, decade or lifetime
+            sponsorship — with Puja services, ceremonies, certificates and Dharma TV media benefits
+            — see the Dharma Ideal Campaign, which also covers Community and Corporate partnership.
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3 justify-center">
+            <Link to="/dharma-campaign" className="btn-primary">View Dharma Ideal Sponsorship <ArrowRight className="size-4" /></Link>
+            <Link to="/membership" className="btn-outline" style={{ color: "var(--maroon)", borderColor: "var(--maroon)" }}>Membership Plans</Link>
+          </div>
         </div>
       </section>
     </Layout>

@@ -137,7 +137,9 @@ function ProductDetailPage() {
             <Gallery product={product} category={cat} />
 
             {/* ---------- Buying panel ---------- */}
-            <div className="lg:sticky lg:top-28">
+            {/* Not sticky: this column is transparent, so a stuck panel would let
+                the gallery scroll through it. */}
+            <div>
               {cat && (
                 <div className="flex items-center gap-2">
                   <span className="size-6 rounded grid place-items-center text-cream" style={{ background: cat.gradient }}>

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout, PageHero } from "@/components/Layout";
-import { Heart, Users, Building2, Repeat, HandHeart, Globe2, ArrowRight } from "lucide-react";
+import { Heart, Users, Building2, Repeat, HandHeart, Globe2, ArrowRight, BadgeCheck, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/support")({
   head: () => ({
@@ -39,6 +39,48 @@ function Support() {
         </div>
         <div className="container-x mt-12 text-center">
           <Link to="/donate" className="btn-primary">Donate Now <ArrowRight className="size-4" /></Link>
+        </div>
+      </section>
+
+      {/* Structured programmes */}
+      <section className="border-t border-border bg-secondary/30">
+        <div className="container-x py-16">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="eyebrow">Ongoing Programmes</span>
+            <h2 className="font-display text-4xl font-semibold mt-2 text-maroon">Join as a member or sponsor</h2>
+            <p className="text-sm text-muted-foreground mt-3">
+              Beyond one-off gifts, our membership and sponsorship programmes offer lasting facilities,
+              services and recognition.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="rounded-2xl border border-border bg-card p-8 flex flex-col">
+              <BadgeCheck className="size-8 text-gold-deep" />
+              <h3 className="font-display text-2xl text-maroon mt-4">Paid Membership Plan</h3>
+              <p className="text-sm text-foreground/75 mt-2 flex-1 leading-relaxed">
+                Five categories from ₹9 a year — Basic, Silver, Gold, Premium and Lifetime.
+                Members receive a registration number, certificates, retreat access, networking,
+                skill-development programmes and recognition.
+              </p>
+              <Link to="/membership" className="btn-primary mt-6 w-full justify-center">
+                View Membership Plans <ArrowRight className="size-4" />
+              </Link>
+            </div>
+
+            <div className="rounded-2xl border border-gold bg-gold/[0.06] p-8 flex flex-col">
+              <Sparkles className="size-8 text-gold-deep" />
+              <h3 className="font-display text-2xl text-maroon mt-4">Dharma Ideal Sponsorship</h3>
+              <p className="text-sm text-foreground/75 mt-2 flex-1 leading-relaxed">
+                Gem (lifetime), Decade and annual sponsorship for families — plus Community and
+                Corporate partnership with Dharma TV, including Puja services, ceremonies, media
+                recognition and spiritual programmes.
+              </p>
+              <Link to="/dharma-campaign" className="btn-gold mt-6 w-full justify-center">
+                Explore Sponsorship <ArrowRight className="size-4" />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </Layout>

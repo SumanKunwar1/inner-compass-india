@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Youtube, Instagram, Linkedin, Twitter, MapPin, Phone, Mail, Globe } from "lucide-react";
+import { Facebook, Youtube, Instagram, Linkedin, Twitter, MapPin, Phone, Mail, Globe, ExternalLink } from "lucide-react";
 import logo from "@/assets/btmc-logo.jpg";
 import { useSettings } from "@/lib/contentStore";
+import { networkSites } from "@/data/membership";
 
 const SOCIAL_ICONS = { facebook: Facebook, instagram: Instagram, youtube: Youtube, linkedin: Linkedin, twitter: Twitter } as const;
 
@@ -64,7 +65,9 @@ export function SiteFooter() {
           <ul className="space-y-2 text-sm opacity-90">
             <li><Link to="/register" className="hover:text-gold">Register for a Retreat</Link></li>
             <li><Link to="/donate" className="hover:text-gold">Donate Now</Link></li>
+            <li><Link to="/membership" className="hover:text-gold">Become a Member</Link></li>
             <li><Link to="/support" className="hover:text-gold">Become a Sponsor</Link></li>
+            <li><Link to="/dharma-campaign" className="hover:text-gold">Dharma Ideal Sponsorship</Link></li>
             <li><Link to="/sponsors" className="hover:text-gold">Event Sponsorship</Link></li>
             <li><Link to="/peace-prayers" className="hover:text-gold">World Peace Prayers</Link></li>
             <li><Link to="/contact" className="hover:text-gold">Contact Us</Link></li>
@@ -81,6 +84,31 @@ export function SiteFooter() {
             <li className="flex gap-3"><Mail className="size-4 shrink-0 mt-0.5 text-gold" /><span>{settings.orgEmail}</span></li>
             <li className="flex gap-3"><Globe className="size-4 shrink-0 mt-0.5 text-gold" /><span>{settings.website}</span></li>
           </ul>
+        </div>
+      </div>
+
+      {/* Official BTMC & Dharma Ideal websites */}
+      <div className="border-t border-cream/10">
+        <div className="container-x py-8">
+          <h4 className="font-display text-lg text-gold mb-4">Our Network</h4>
+          <div className="grid sm:grid-cols-3 gap-4">
+            {networkSites.map((site) => (
+              <a
+                key={site.href}
+                href={site.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group rounded-lg border border-cream/15 hover:border-gold px-4 py-3 transition"
+              >
+                <div className="flex items-center gap-2 text-sm font-medium group-hover:text-gold transition-colors">
+                  <Globe className="size-4 text-gold shrink-0" />
+                  {site.label}
+                  <ExternalLink className="size-3 opacity-50" />
+                </div>
+                <div className="text-xs opacity-70 mt-1">{site.region} · {site.description}</div>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 

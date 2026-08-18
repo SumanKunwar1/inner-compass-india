@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout, PageHero } from "@/components/Layout";
-import { MapPin, Phone, Mail, Globe, Loader2, CheckCircle2 } from "lucide-react";
+import { networkSites } from "@/data/membership";
+import { MapPin, Phone, Mail, Globe, Loader2, CheckCircle2, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { addMessage } from "@/lib/submissionsStore";
 import { useSettings } from "@/lib/contentStore";
@@ -89,6 +90,33 @@ function Contact() {
               </button>
             </form>
           )}
+        </div>
+      </section>
+
+      {/* Official websites */}
+      <section className="border-t border-border bg-secondary/30">
+        <div className="container-x py-12">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <span className="eyebrow">Our Official Websites</span>
+            <h2 className="font-display text-3xl font-semibold mt-2 text-maroon">Find us online</h2>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {networkSites.map((site) => (
+              <a
+                key={site.href}
+                href={site.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group rounded-xl border border-border bg-card p-5 hover:border-gold hover:shadow-[var(--shadow-soft)] transition"
+              >
+                <div className="text-xs uppercase tracking-widest text-gold-deep">{site.region}</div>
+                <div className="font-display text-lg text-maroon mt-1 inline-flex items-center gap-1.5 group-hover:text-gold-deep transition-colors">
+                  {site.label} <ExternalLink className="size-3.5 opacity-60" />
+                </div>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{site.description}</p>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
     </Layout>
