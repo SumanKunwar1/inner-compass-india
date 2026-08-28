@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "BTMC Foundation India — API for charity events, bookings, healing items and orders",
+  "description": "BTMC Foundation India \u2014 API for charity events, bookings, healing items and orders",
   "main": "src/server.js",
   "scripts": {
-    "dev": "node --watch src/server.js",
-    "build": "node scripts/check.mjs",
-    "start": "node src/server.js",
+    "dev": "node init && node --watch src/server.js",
+    "build": "node init && node scripts/check.mjs",
+    "start": "node init && node src/server.js",
     "seed": "node src/seed.js"
   },
   "dependencies": {

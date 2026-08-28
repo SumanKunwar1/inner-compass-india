@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   ArrowRight, Calendar, MapPin, Heart, BookOpen, Users, Globe2, Sparkles,
-  PlayCircle, Sun, Mountain, Clock,
+  PlayCircle, Sun, Mountain, Clock, HandHeart, Landmark, School, Building2,
+  ChevronDown, ShieldCheck, Share2, Check,
 } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import heroImg from "@/assets/hero-buddha.jpg";
@@ -11,6 +13,8 @@ import pilgrimImg from "@/assets/pilgrimage.jpg";
 import { featuredCharityEvent } from "@/data/charityEvents";
 import { useEvents } from "@/lib/charityStore";
 import { useSettings } from "@/lib/contentStore";
+import { YouTubeEmbed } from "@/components/YouTubeEmbed";
+import { BankDetails } from "@/components/BankDetails";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -66,6 +70,8 @@ function Home() {
           </div>
         </div>
       </section>
+
+      <CrowdfundingAppeal />
 
       {/* Featured charity event */}
       <section className="section-y">
@@ -375,5 +381,165 @@ function EventCard({ img, tag, title, date, venue, items, featured }: {
         </Link>
       </div>
     </article>
+  );
+}
+
+
+/* ---------------- Crowdfunding appeal ---------------- */
+
+/** The long-term builds this appeal funds - see /projects for the full detail. */
+const APPEAL_PROJECTS = [
+  {
+    icon: Landmark,
+    title: "International Ngyungne Retreat Center",
+    detail: "A dedicated sanctuary for intensive purification retreats and long-term meditation practice.",
+  },
+  {
+    icon: School,
+    title: "RDSCL Monastic College",
+    detail: "Training the next generation of monks in Buddhist philosophy, ritual and practice.",
+  },
+  {
+    icon: Building2,
+    title: "Bodhi Teaching & Meditation Center",
+    detail: "A city sanctuary for weekly meditation, Dharma classes and healing programmes in Delhi.",
+  },
+];
+
+function CrowdfundingAppeal() {
+  const [showBank, setShowBank] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const share = async () => {
+    const url = typeof window !== "undefined" ? window.location.origin : "";
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Support BTMC Foundation India", url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      /* the viewer dismissed the share sheet */
+    }
+  };
+
+  return (
+    <section className="relative overflow-hidden border-b border-border bg-secondary/40">
+      <div
+        className="absolute inset-0 opacity-[0.07] pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 12% 20%, var(--gold) 0%, transparent 45%), radial-gradient(circle at 88% 80%, var(--saffron) 0%, transparent 45%)",
+        }}
+      />
+
+      <div className="container-x relative py-16 md:py-20">
+        <div className="grid lg:grid-cols-5 gap-10 xl:gap-14 items-start">
+          {/* Film */}
+          <div className="lg:col-span-3">
+            <YouTubeEmbed id="MJijWP2WtoQ" title="Help us build a home for the Dharma" />
+          </div>
+
+          {/* Appeal */}
+          <div className="lg:col-span-2">
+            <span className="inline-flex items-center gap-2 rounded-full bg-gold/15 border border-gold/40 text-gold-deep px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em]">
+              <HandHeart className="size-3.5" /> Crowdfunding Appeal
+            </span>
+
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mt-4 text-maroon leading-[1.1]">
+              Help us build a home for the <em className="text-gold-deep not-italic">Dharma</em>
+            </h2>
+
+            <p className="mt-5 text-foreground/75 leading-relaxed">
+              BTMC Foundation offers its retreats, prayers and healing programmes freely - nobody is
+              turned away for lack of means. That is only possible because people give. This appeal
+              funds the sanctuaries where that work will continue for generations.
+            </p>
+            <p className="mt-3 text-foreground/75 leading-relaxed">
+              Watch the film, then give whatever feels right. Every contribution, of any size,
+              carries the same merit and moves the work forward.
+            </p>
+
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link to="/donate" className="btn-primary">
+                <Heart className="size-4 fill-current" /> Donate Now
+              </Link>
+              <Link
+                to="/membership"
+                className="btn-outline"
+                style={{ color: "var(--maroon)", borderColor: "var(--maroon)" }}
+              >
+                Become a Member
+              </Link>
+              <button
+                onClick={share}
+                className="inline-flex items-center justify-center gap-1.5 rounded-md border border-border px-4 py-2.5 text-sm font-semibold text-maroon hover:border-gold hover:bg-gold/10 transition"
+              >
+                {copied ? (<><Check className="size-4" /> Link copied</>) : (<><Share2 className="size-4" /> Share</>)}
+              </button>
+            </div>
+
+            <p className="mt-4 inline-flex items-start gap-2 text-xs text-muted-foreground">
+              <ShieldCheck className="size-4 text-gold-deep shrink-0 mt-px" />
+              Donations are receipted, and 80G receipts are issued by email once verified.
+            </p>
+          </div>
+        </div>
+
+        {/* What the appeal builds */}
+        <div className="mt-14">
+          <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground text-center">
+            What your gift builds
+          </h3>
+          <div className="mt-6 grid md:grid-cols-3 gap-4">
+            {APPEAL_PROJECTS.map((p) => (
+              <div key={p.title} className="rounded-xl border border-border bg-card p-5 hover:border-gold transition">
+                <p.icon className="size-6 text-gold-deep" />
+                <div className="font-display text-lg text-maroon mt-3 leading-snug">{p.title}</div>
+                <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{p.detail}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-6">
+            <Link to="/projects" className="inline-flex items-center gap-1.5 text-sm font-semibold text-maroon hover:text-gold-deep">
+              See all our projects <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Direct bank transfer - the same account as the donate page */}
+        <div className="mt-10 max-w-3xl mx-auto">
+          <button
+            onClick={() => setShowBank((v) => !v)}
+            className="w-full inline-flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-5 py-4 text-left hover:border-gold transition"
+            aria-expanded={showBank}
+          >
+            <span>
+              <span className="block font-semibold text-maroon">Prefer a direct bank transfer?</span>
+              <span className="block text-sm text-muted-foreground mt-0.5">
+                Our account details, and where to send your payment screenshot.
+              </span>
+            </span>
+            <ChevronDown className={`size-5 text-gold-deep shrink-0 transition-transform ${showBank ? "rotate-180" : ""}`} />
+          </button>
+
+          {showBank && (
+            <div className="mt-4 space-y-4">
+              <BankDetails
+                title="Transfer directly to BTMC Foundation"
+                note="After transferring, upload your payment screenshot on the donate page so we can verify your gift and send your receipt."
+              />
+              <div className="text-center">
+                <Link to="/donate" className="btn-gold">
+                  Upload Payment Screenshot <ArrowRight className="size-4" />
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
