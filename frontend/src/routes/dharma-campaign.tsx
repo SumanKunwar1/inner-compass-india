@@ -3,15 +3,12 @@ import { Layout, PageHero } from "@/components/Layout";
 import { useState } from "react";
 import {
   ArrowRight, Check, Crown, ExternalLink, Tv, Building2, Users2, Sparkles,
-  HeartHandshake, GraduationCap, Handshake,
+  HeartHandshake, GraduationCap, Handshake, Loader2,
 } from "lucide-react";
-import {
-  dharmaIdealLevels, communitySponsorship, corporateSponsorship, corporateWellbeing,
-  sponsorshipDisclaimer, DHARMA_IDEAL_URL, type SponsorLevel, type OrgSponsorship,
-} from "@/data/membership";
+import { corporateWellbeing, sponsorshipDisclaimer, DHARMA_IDEAL_URL } from "@/data/membership";
+import { usePlans, usePlansLoaded, type SponsorshipPlan } from "@/lib/sponsorshipStore";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { PaymentForm } from "@/components/PaymentForm";
-import { addDonation } from "@/lib/submissionsStore";
+import { ApplicationForm } from "@/components/ApplicationForm";
 
 export const Route = createFileRoute("/dharma-campaign")({
   head: () => ({
@@ -29,13 +26,12 @@ const nonPaid = [
   { t: "Dharma Ideal Volunteer", d: "Serve the sangha with your time, skill and heart." },
 ];
 
-type JoinTarget = { name: string; amount: number; label: string; period: string } | null;
-
 function Campaign() {
-  const [joining, setJoining] = useState<JoinTarget>(null);
-
-  const open = (name: string, amount: number, label: string, period: string) =>
-    setJoining({ name, amount, label, period });
+  const dharmaIdealLevels = usePlans("dharma-ideal");
+  const communitySponsorship = usePlans("community")[0];
+  const corporateSponsorship = usePlans("corporate")[0];
+  const loaded = usePlansLoaded();
+  const [joining, setJoining] = useState<SponsorshipPlan | null>(null);
 
   return (
     <Layout>
@@ -132,29 +128,39 @@ function Campaign() {
             <h2 className="font-display text-4xl font-semibold mt-2 text-maroon">Become a Dharma Ideal Sponsor</h2>
           </div>
 
+          {!loaded && (
+            <div className="py-12 text-center text-muted-foreground">
+              <Loader2 className="size-8 mx-auto animate-spin text-gold-deep" />
+              <p className="mt-3 text-sm">Loading sponsorship levels…</p>
+            </div>
+          )}
+
           <div className="grid lg:grid-cols-3 gap-6 items-start">
             {dharmaIdealLevels.map((l) => (
-              <SponsorCard key={l.id} level={l} onJoin={() => open(l.name, l.fee, l.feeLabel, l.period)} />
+              <SponsorCard key={l.id} level={l} onJoin={() => setJoining(l)} />
             ))}
           </div>
         </div>
       </section>
 
       {/* Community sponsorship */}
-      <OrgSection
-        data={communitySponsorship}
-        icon={Users2}
-        eyebrow="For organizations & communities"
-        onJoin={() => open(communitySponsorship.name, communitySponsorship.fee, communitySponsorship.feeLabel, communitySponsorship.period)}
-      />
+      {communitySponsorship && (
+        <OrgSection
+          data={communitySponsorship}
+          icon={Users2}
+          eyebrow="For organizations & communities"
+          onJoin={() => setJoining(communitySponsorship)}
+        />
+      )}
 
       {/* Corporate sponsorship */}
+      {corporateSponsorship && (
       <OrgSection
         data={corporateSponsorship}
         icon={Building2}
         eyebrow="For businesses & corporates"
         tinted
-        onJoin={() => open(corporateSponsorship.name, corporateSponsorship.fee, corporateSponsorship.feeLabel, corporateSponsorship.period)}
+        onJoin={() => setJoining(corporateSponsorship)}
       >
         {/* Corporate well-being extra */}
         <div className="mt-10 rounded-2xl border border-border bg-card p-6 md:p-8">
@@ -196,6 +202,7 @@ function Campaign() {
           </div>
         </div>
       </OrgSection>
+      )}
 
       {/* Vision */}
       <section className="relative py-20 text-cream overflow-hidden" style={{ background: "linear-gradient(135deg, var(--maroon), var(--maroon-deep))" }}>
@@ -231,21 +238,12 @@ function Campaign() {
           {joining && (
             <>
               <div className="mb-4">
-                <div className="text-xs uppercase tracking-widest text-gold-deep">Dharma Ideal · {joining.period}</div>
+                <div className="text-xs uppercase tracking-widest text-gold-deep">
+                  Dharma Ideal{joining.period ? ` · ${joining.period}` : ""}
+                </div>
                 <h3 className="font-display text-2xl text-maroon">{joining.name}</h3>
               </div>
-              <PaymentForm
-                context="Sponsorship"
-                itemLabel={`${joining.name} — ${joining.label} / ${joining.period}`}
-                fixedAmount={joining.amount}
-                note="Complete your sponsorship by transferring the amount below and uploading your payment screenshot. Our team will verify it and contact you to arrange your services and certificate."
-                onRecord={(payload) =>
-                  addDonation({
-                    ...payload,
-                    message: `Sponsorship: ${joining.name} (${joining.period})${payload.message ? ` — ${payload.message}` : ""}`,
-                  })
-                }
-              />
+              <ApplicationForm plan={joining} onDone={() => setJoining(null)} />
             </>
           )}
         </DialogContent>
@@ -256,7 +254,7 @@ function Campaign() {
 
 /* ---------------- pieces ---------------- */
 
-function SponsorCard({ level, onJoin }: { level: SponsorLevel; onJoin: () => void }) {
+function SponsorCard({ level, onJoin }: { level: SponsorshipPlan; onJoin: () => void }) {
   const [expanded, setExpanded] = useState(false);
   const shown = expanded ? level.benefits : level.benefits.slice(0, 6);
 
@@ -304,7 +302,7 @@ function SponsorCard({ level, onJoin }: { level: SponsorLevel; onJoin: () => voi
 }
 
 function OrgSection({ data, icon: Icon, eyebrow, tinted, onJoin, children }: {
-  data: OrgSponsorship;
+  data: SponsorshipPlan;
   icon: typeof Users2;
   eyebrow: string;
   tinted?: boolean;

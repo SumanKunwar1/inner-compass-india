@@ -2,14 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout, PageHero } from "@/components/Layout";
 import { useState } from "react";
 import {
-  Check, Crown, ArrowRight, Users, Sparkles, ShieldCheck, ScrollText, Phone,
+  Check, Crown, ArrowRight, Users, Sparkles, ShieldCheck, ScrollText, Phone, Loader2,
 } from "lucide-react";
-import {
-  membershipTiers, commonMemberFacilities, membershipTerms, type MembershipTier,
-} from "@/data/membership";
+import { commonMemberFacilities, membershipTerms } from "@/data/membership";
+import { usePlans, usePlansLoaded, type SponsorshipPlan } from "@/lib/sponsorshipStore";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { PaymentForm } from "@/components/PaymentForm";
-import { addDonation } from "@/lib/submissionsStore";
+import { ApplicationForm } from "@/components/ApplicationForm";
 
 export const Route = createFileRoute("/membership")({
   head: () => ({
@@ -22,7 +20,9 @@ export const Route = createFileRoute("/membership")({
 });
 
 function Membership() {
-  const [joining, setJoining] = useState<MembershipTier | null>(null);
+  const membershipTiers = usePlans("membership");
+  const loaded = usePlansLoaded();
+  const [joining, setJoining] = useState<SponsorshipPlan | null>(null);
 
   return (
     <Layout>
@@ -44,8 +44,10 @@ function Membership() {
           <div className="flex items-center gap-3 text-maroon">
             <Users className="size-8 text-gold-deep" />
             <div>
-              <div className="font-display text-2xl">5 categories</div>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">from ₹9 per year</div>
+              <div className="font-display text-2xl">{membershipTiers.length || 5} categories</div>
+              <div className="text-xs uppercase tracking-widest text-muted-foreground">
+                {membershipTiers.length ? `from ${membershipTiers[0].feeLabel} per year` : "from ₹9 per year"}
+              </div>
             </div>
           </div>
         </div>
@@ -61,6 +63,18 @@ function Membership() {
               Each category includes everything from the level below it, so benefits build as you go.
             </p>
           </div>
+
+          {!loaded && (
+            <div className="py-16 text-center text-muted-foreground">
+              <Loader2 className="size-8 mx-auto animate-spin text-gold-deep" />
+              <p className="mt-3 text-sm">Loading membership categories…</p>
+            </div>
+          )}
+          {loaded && membershipTiers.length === 0 && (
+            <div className="py-16 text-center border border-dashed border-border rounded-2xl text-muted-foreground text-sm">
+              Membership categories are being updated. Please check back shortly.
+            </div>
+          )}
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {membershipTiers.map((t) => (
@@ -82,7 +96,7 @@ function Membership() {
 
                 <div className="mt-4 flex items-baseline gap-2">
                   <span className="font-display text-4xl text-maroon">{t.feeLabel}</span>
-                  <span className="text-sm text-muted-foreground">/ {t.validity.toLowerCase()}</span>
+                  <span className="text-sm text-muted-foreground">/ {(t.period || "").toLowerCase()}</span>
                 </div>
 
                 {t.inherits && (
@@ -187,7 +201,7 @@ function Membership() {
             meaningful social and community-development initiatives.
           </p>
           <div className="mt-8 flex flex-wrap gap-4 justify-center">
-            <button onClick={() => setJoining(membershipTiers[0])} className="btn-gold">
+            <button onClick={() => membershipTiers[0] && setJoining(membershipTiers[0])} disabled={!membershipTiers.length} className="btn-gold disabled:opacity-60">
               Become a Member <ArrowRight className="size-4" />
             </button>
             <Link to="/dharma-campaign" className="btn-outline">Explore Dharma Ideal Sponsorship</Link>
@@ -201,21 +215,10 @@ function Membership() {
           {joining && (
             <>
               <div className="mb-4">
-                <div className="text-xs uppercase tracking-widest text-gold-deep">Membership · {joining.validity}</div>
+                <div className="text-xs uppercase tracking-widest text-gold-deep">Membership · {joining.period}</div>
                 <h3 className="font-display text-2xl text-maroon">Join as {joining.name}</h3>
               </div>
-              <PaymentForm
-                context="Membership"
-                itemLabel={`${joining.name} — ${joining.feeLabel} / ${joining.validity}`}
-                fixedAmount={joining.fee}
-                note="Complete your membership by transferring the fee below and uploading your payment screenshot. Our team will verify it and send your membership registration number by email."
-                onRecord={(payload) =>
-                  addDonation({
-                    ...payload,
-                    message: `Membership: ${joining.name} (${joining.validity})${payload.message ? ` — ${payload.message}` : ""}`,
-                  })
-                }
-              />
+              <ApplicationForm plan={joining} kind="membership" onDone={() => setJoining(null)} />
             </>
           )}
         </DialogContent>

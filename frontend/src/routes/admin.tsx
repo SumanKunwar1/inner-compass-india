@@ -1,8 +1,9 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, CalendarHeart, Inbox, LogOut, ExternalLink, Lock, Loader2, Menu, X, Gem, ShoppingBag, HeartHandshake, Mail, Users, Settings } from "lucide-react";
+import { LayoutDashboard, CalendarHeart, Inbox, LogOut, ExternalLink, Lock, Loader2, Menu, X, Gem, ShoppingBag, HeartHandshake, Mail, Users, Settings, Award, ClipboardList } from "lucide-react";
 import { useIsAuthed, login, logout } from "@/lib/charityStore";
 import { resetOrdersSession, refreshProducts } from "@/lib/shopStore";
+import { resetApplicationsSession, refreshPlans } from "@/lib/sponsorshipStore";
 import { resetSubmissionsSession } from "@/lib/submissionsStore";
 import logo from "@/assets/btmc-logo.jpg";
 
@@ -28,6 +29,13 @@ const NAV_SECTIONS = [
     items: [
       { to: "/admin/healing-items", label: "Products", icon: Gem },
       { to: "/admin/orders", label: "Orders", icon: ShoppingBag },
+    ],
+  },
+  {
+    heading: "Membership & Sponsorship",
+    items: [
+      { to: "/admin/sponsorships", label: "Plans & Content", icon: Award },
+      { to: "/admin/applications", label: "Applications", icon: ClipboardList },
     ],
   },
   {
@@ -151,7 +159,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         <a href="/" target="_blank" rel="noreferrer" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-cream/80 hover:bg-cream/10 hover:text-cream transition">
           <ExternalLink className="size-4" /> View site
         </a>
-        <button onClick={() => { logout(); resetOrdersSession(); resetSubmissionsSession(); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-cream/80 hover:bg-cream/10 hover:text-cream transition">
+        <button onClick={() => { logout(); resetOrdersSession(); resetSubmissionsSession(); resetApplicationsSession(); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-cream/80 hover:bg-cream/10 hover:text-cream transition">
           <LogOut className="size-4" /> Logout
         </button>
       </div>
@@ -171,8 +179,9 @@ function AdminLogin() {
     setError(null);
     try {
       await login(email, password);
-      // Re-read the catalogue with the new session so drafts become visible.
+      // Re-read content with the new session so drafts become visible.
       refreshProducts().catch(() => {});
+      refreshPlans().catch(() => {});
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign in failed");
     } finally {
